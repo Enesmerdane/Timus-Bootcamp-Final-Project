@@ -1,7 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
-
-import { CreateUserDTO } from './dto/createUser.dto';
+import * as bcrypt from 'bcrypt'; // for encrypting the password
 
 import { User } from './model/user.model';
 
@@ -11,8 +9,6 @@ export class AuthService {
 
     async createUser(payload: User) {
         try {
-            const id = uuidv4();
-
             // Check whether a user with given username exists
             const usernameExistsResult = await this.elasticConn.search({
                 index: 'users_auth',
@@ -50,6 +46,38 @@ export class AuthService {
             });
 
             return res;
+        } catch (err) {
+            // TODO: Error handling
+        }
+    }
+
+    async loginUser(email: string, password: string) {
+        try {
+            // Check whether a user with given username exists
+            const emailExistsResult = await this.elasticConn.search({
+                index: 'users_auth',
+                query: {
+                    match_phrase: {
+                        email: email,
+                    },
+                },
+            });
+
+            if (emailExistsResult.hits.total.value <= 0) {
+                // TODO: Error handling
+                return { error: 'user not found' };
+            }
+
+            if (
+                await bcrypt.compare(
+                    password,
+                    emailExistsResult.hits.hits[0]._source.hashedPassword,
+                )
+            ) {
+                return { msg: 'success' };
+            } else {
+                return { msg: 'fail' };
+            }
         } catch (err) {
             // TODO: Error handling
         }

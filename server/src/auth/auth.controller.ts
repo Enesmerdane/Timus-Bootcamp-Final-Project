@@ -2,6 +2,7 @@ import { Controller, Inject, Post, Body } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; // for encrypting the password
 
 import { CreateUserDTO } from './dto/createUser.dto';
+import { LoginDTO } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { User } from './model/user.model';
 
@@ -9,7 +10,7 @@ import { User } from './model/user.model';
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Post()
+    @Post('register')
     async createUser(@Body() createUserDTO: CreateUserDTO) {
         try {
             // Encrypt password
@@ -32,6 +33,20 @@ export class AuthController {
             } else {
                 throw new Error();
             }
+        } catch (err) {
+            // TODO: Error handling
+        }
+    }
+
+    @Post('login')
+    async login(@Body() loginDTO: LoginDTO) {
+        try {
+            const result = await this.authService.loginUser(
+                loginDTO.email,
+                loginDTO.password,
+            );
+
+            return result;
         } catch (err) {
             // TODO: Error handling
         }
