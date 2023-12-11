@@ -40,20 +40,30 @@ This project is created as a final project of Patika&Timus Fullstack Bootcamp.
 <h2>Mockup Designs</h2>
 
 <h3>Register Page</h3>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen.png?raw=true"/>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen2.png?raw=true"/>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen3.png?raw=true"/>
 <h3>Login Page</h3>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/LoginScreen.png?raw=true"/>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/LoginScreen2.png?raw=true"/>
 <h3>Factory List Page</h3>
-<h3>Factory Details Page</h3> 
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/HomeScreen%20-%20Dashboard%20-%20Fabrika%20Duzenle.png?raw=true"/>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/HomeScreen%20-%20Dashboard%20-%20Fabrika%20Listesi.png?raw=true"/>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/HomeScreen%20-%20Dashboard%20-%20Sutun%20ekle.png?raw=true"/>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/HomeScreen%20-%20Dashboard%20-Delete%20row.png?raw=true"/>
+<h3>Factory Details Page</h3>
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/HomeScreen%20-%20Dashboard%20-%20Fabrika%20Detay.png?raw=true"/>
 
 <h2>System Design</h2>
 
 <h3>Database Design</h3>
 
 <h4>users_auth</h4>
-
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Diagrams/DB_user_auth.png?raw=true"/>
 <h4>factory tables</h4>
-
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Diagrams/DB_factory_design.png?raw=true"/>
 <h4>logtable</h4>
-
+<img src="https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Diagrams/DB_logtable_design.png?raw=true"/>
 <h3>API List</h3>
 <h4>1. Register POST /api/auth/register</h4>
 This api is designed for new user creation. User information and type are included inside request body
