@@ -401,3 +401,29 @@ This api is designed to add column to the factory details table.
 }
 ```
 
+<h4>11. Refresh Token POST /api/token-refresh</h4>
+This api is designed to refresh access token of the user details table.
+
+<strong>Request body:</strong>
+'token' in the body represents refresh token
+<br>
+```
+{
+    payload: {
+        token: String
+    }
+        
+}
+```
+
+<strong>Response body:</strong>
+
+```
+{
+    result: Boolean,
+    result_id: Number
+    payload: {
+        access_token: String
+    } 
+}
+```
