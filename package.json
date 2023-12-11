@@ -4,7 +4,8 @@
   "description": "<h1>Introduction</h1>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/issues"
   },
-  "homepage": "https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project#readme"
+  "homepage": "https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "husky": "^8.0.0"
+  }
 }
