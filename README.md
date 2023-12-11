@@ -40,7 +40,7 @@ This project is created as a final project of Patika&Timus Fullstack Bootcamp.
 <h2>Mockup Designs</h2>
 
 <h3>Register Page</h3>
-![](https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen.png?raw=true)
+![img](https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen.png?raw=true)
 ![](https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen2.png?raw=true)
 ![](https://github.com/Enesmerdane/Timus-Bootcamp-Final-Project/blob/main/Mockup%20Designs/RegisterScreen3.png?raw=true)
 <h3>Login Page</h3>
