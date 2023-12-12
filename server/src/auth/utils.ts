@@ -17,3 +17,13 @@ export function generateRefreshToken(userId, email): String {
     });
     return token;
 }
+
+export function validateRefreshToken(token: string): any {
+    return jwt.verify(token, process.env.DB_SECRET_REFRESH, (err, payload) => {
+        if (err) {
+            throw Error('Not valid refresh token');
+        }
+
+        return payload;
+    });
+}

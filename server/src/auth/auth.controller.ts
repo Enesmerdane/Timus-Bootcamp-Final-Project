@@ -15,6 +15,7 @@ import { LoginDTO } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { User } from './model/user.model';
 import { JwtAuthGuard } from './jwt-auth-guard';
+import { generateAuthToken, validateRefreshToken } from './utils';
 
 @Controller('auth')
 export class AuthController {
@@ -63,7 +64,7 @@ export class AuthController {
             response
                 .cookie('x-access-token', token)
                 .cookie('x-refresh-token', refreshToken)
-                .json({ message: 'Login successful', token });
+                .json({ message: 'Login successful', token, refreshToken });
         } catch (err) {
             // TODO: Error handling
         }
@@ -73,5 +74,20 @@ export class AuthController {
     @Get('isauth')
     async isAuth(@Request() req) {
         return req.user;
+    }
+
+    @Post('renewtoken')
+    async renewAccessToken(@Body() body: any) {
+        try {
+            const refreshToken = body.refreshToken;
+            const { sub: id, email } = validateRefreshToken(refreshToken);
+
+            const accessToken = generateAuthToken(id, email);
+
+            return { accessToken, refreshToken };
+        } catch (err) {
+            return err;
+            // TODO: handle error
+        }
     }
 }
