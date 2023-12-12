@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FactoryDetail } from './model/factoryDetail.model';
+import { FactoryInformation } from './model/factoryInformation.model';
 
 @Injectable()
 export class FactoryService {
@@ -50,6 +51,25 @@ export class FactoryService {
                 usage_fee=${factoryDetail.usage},
                 discounted_fee=${factoryDetail.discounted_fee}
                 WHERE id='${factoryDetail.id}'
+            `);
+        } catch (err) {
+            console.log(err);
+
+            // TODO: Handle errors
+        }
+    }
+
+    async changeFactoryInformation(factoryInformation: FactoryInformation) {
+        try {
+            const res = this.pgConn.query(`
+                UPDATE factory
+                SET
+                name='${factoryInformation.name}',
+                subscription_begin_date=TO_DATE('${factoryInformation.subscription_start_date}', 'DD/MM/YYYY'),
+                subscription_end_date=TO_DATE('${factoryInformation.subscription_end_date}', 'DD/MM/YYYY'),
+                no_of_workers=${factoryInformation.no_of_workers},
+                free_user=${factoryInformation.free_user}
+                WHERE id='${factoryInformation.id}'
             `);
         } catch (err) {
             console.log(err);

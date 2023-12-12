@@ -4,6 +4,8 @@ import { FactoryService } from './factory.service';
 import { FactoryDetail } from './model/factoryDetail.model';
 import { plainToClass } from 'class-transformer';
 import { UpdateFactoryDetailDTO } from './dto/updateFactoryDetail.dto';
+import { UpdateFactoryInformationDTO } from './dto/updateFactoryInformation.dto';
+import { FactoryInformation } from './model/factoryInformation.model';
 
 @Controller()
 export class FactoryController {
@@ -44,9 +46,32 @@ export class FactoryController {
         @Param('factory_details_id') factoryDetailsId,
         @Body() body: UpdateFactoryDetailDTO,
     ) {
-        const factoryDetail: FactoryDetail = { ...body.data };
+        try {
+            const factoryDetail: FactoryDetail = { ...body.data };
 
-        const result =
-            await this.factoryService.changeFactoryDetails(factoryDetail);
+            const result =
+                await this.factoryService.changeFactoryDetails(factoryDetail);
+        } catch (err) {
+            console.log(err);
+            // TODO: Handle Errors
+        }
+    }
+
+    @Put('factory/:factory_id')
+    async changeFactoryInformation(
+        @Param('factory_id') UpdateFactoryDetailDTO,
+        @Body() body: UpdateFactoryInformationDTO,
+    ) {
+        try {
+            const factoryInformation: FactoryInformation = { ...body.data };
+
+            const result =
+                await this.factoryService.changeFactoryInformation(
+                    factoryInformation,
+                );
+        } catch (err) {
+            console.log(err);
+            // TODO: Handle Errors
+        }
     }
 }
