@@ -78,7 +78,6 @@ export class AuthService {
                     emailExistsResult.hits.hits[0]._id,
                     email,
                 );
-
                 return { token };
             } else {
                 return { msg: 'fail' };
@@ -86,5 +85,26 @@ export class AuthService {
         } catch (err) {
             // TODO: Error handling
         }
+    }
+
+    async validateUser(email: string, password: string): Promise<any> {
+        const emailExistsResult = await this.elasticConn.search({
+            index: 'users_auth',
+            query: {
+                match_phrase: {
+                    email: email,
+                },
+            },
+        });
+        //const user = await this.usersService.findOne(username);
+        if (
+            await bcrypt.compare(
+                password,
+                emailExistsResult.hits.hits[0]._source.hashedPassword,
+            )
+        ) {
+            return email;
+        }
+        return null;
     }
 }

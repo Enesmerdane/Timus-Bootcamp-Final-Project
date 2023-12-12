@@ -5,8 +5,8 @@ import { ElasticDbModule } from './elastic-db/elastic-db.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ElasticDbModule, AuthModule],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [ElasticDbModule, AuthModule],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {}
