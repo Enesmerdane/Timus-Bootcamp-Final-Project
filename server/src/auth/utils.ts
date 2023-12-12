@@ -9,3 +9,11 @@ export function generateAuthToken(userId, email): String {
     });
     return token;
 }
+
+export function generateRefreshToken(userId, email): String {
+    const obj = { sub: userId, email };
+    const token = jwt.sign(obj, process.env.DB_SECRET_REFRESH, {
+        expiresIn: '7d',
+    });
+    return token;
+}

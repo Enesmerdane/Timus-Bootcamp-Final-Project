@@ -14,7 +14,6 @@ import { CreateUserDTO } from './dto/createUser.dto';
 import { LoginDTO } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { User } from './model/user.model';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt-auth-guard';
 
 @Controller('auth')
@@ -56,12 +55,14 @@ export class AuthController {
         @Res({ passthrough: true }) response,
     ) {
         try {
-            const { token } = await this.authService.loginUser(
+            const { token, refreshToken } = await this.authService.loginUser(
                 loginDTO.email,
                 loginDTO.password,
             );
+
             response
                 .cookie('x-access-token', token)
+                .cookie('x-refresh-token', refreshToken)
                 .json({ message: 'Login successful', token });
         } catch (err) {
             // TODO: Error handling
@@ -71,8 +72,6 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     @Get('isauth')
     async isAuth(@Request() req) {
-        console.log(req);
-
         return req.user;
     }
 }

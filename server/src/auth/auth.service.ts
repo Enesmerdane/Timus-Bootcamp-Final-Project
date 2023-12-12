@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; // for encrypting the password
 
 import { User } from './model/user.model';
-import { generateAuthToken } from './utils';
+import { generateAuthToken, generateRefreshToken } from './utils';
 @Injectable()
 export class AuthService {
     constructor(@Inject('ELASTICSEARCH_CONNECTION') private elasticConn: any) {}
@@ -78,7 +78,13 @@ export class AuthService {
                     emailExistsResult.hits.hits[0]._id,
                     email,
                 );
-                return { token };
+
+                const refreshToken = generateRefreshToken(
+                    emailExistsResult.hits.hits[0]._id,
+                    email
+                )
+
+                return { token, refreshToken };
             } else {
                 return { msg: 'fail' };
             }
