@@ -4,15 +4,14 @@ import {
     IsEmail,
     IsIn,
     IsNotEmpty,
-    Min,
-    Validate,
+    MinLength,
 } from 'class-validator';
 import { ValidateHasUpperAndLowerCase } from '../utils';
 
 export class CreateUserDTO {
     @IsNotEmpty()
     @IsAlpha()
-    @Min(8)
+    @MinLength(8)
     username: string;
 
     @IsNotEmpty()
@@ -20,7 +19,7 @@ export class CreateUserDTO {
     email: string;
 
     @IsNotEmpty()
-    @Min(8)
+    @MinLength(8)
     @IsAlphanumeric()
     @ValidateHasUpperAndLowerCase()
     password: string;
