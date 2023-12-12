@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS factory (
+    id UUID PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    subscription_begin_date DATE NOT NULL,
+    subscription_end_date DATE NOT NULL,
+    no_of_workers INTEGER NOT NULL,
+    free_user BOOLEAN NOT NULL
+)
+
+CREATE TABLE IF NOT EXISTS factory_details (
+    id UUID PRIMARY KEY NOT NULL,
+    factory_id UUID REFERENCES factory(id),
+    start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
+    unit VARCHAR(255) NOT NULL,
+    usage DECIMAL NOT NULL,
+    usage_fee DECIMAL NOT NULL,
+    discounted_fee BOOLEAN NOT NULL
+)
+
+INSERT INTO factory(id, name, subscription_begin_date, subscription_end_date, no_of_workers, free_user)
+VALUES ('722e4577-8a79-4ef1-a004-94ec891bea82', 'SOFTKEK', TO_DATE('1/3/2020', 'DD/MM/YYYY'), TO_DATE('1/3/2023', 'DD/MM/YYYY'), 104, false)
