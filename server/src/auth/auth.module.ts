@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { HasUpperAndLowerCase } from './utils';
 
 require('dotenv').config();
 
@@ -18,6 +19,6 @@ require('dotenv').config();
         }),
     ],
     controllers: [AuthController],
-    providers: [AuthService, LocalStrategy],
+    providers: [AuthService, LocalStrategy, HasUpperAndLowerCase],
 })
 export class AuthModule {}
