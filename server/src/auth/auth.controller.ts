@@ -71,6 +71,8 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     @Get('isauth')
     async isAuth(@Request() req) {
+        console.log(req);
+
         return req.user;
     }
 }
