@@ -27,26 +27,20 @@ export class FactoryService {
     constructor(@Inject('PG_CONNECTION') private pgConn: any) {}
 
     async getFactoryList(pageNum: number, queryOptions?: any) {
-        try {
-            if (!queryOptions) {
-                queryOptions = { column_number: 1, desc: false };
-            }
+        if (!queryOptions) {
+            queryOptions = { column_number: 1, desc: false };
+        }
 
-            const res = await this.pgConn.query(
-                `
+        const res = await this.pgConn.query(
+            `
                     SELECT * FROM factory 
                     ORDER BY ${QueryColumnsFactory[queryOptions.column_number]}
                     ${queryOptions.desc ? 'DESC' : 'ASC'} 
                     LIMIT 5 OFFSET ${(pageNum - 1) * 5} 
                 `,
-            );
+        );
 
-            return { data: res };
-        } catch (err) {
-            console.log(err);
-
-            // TODO: Error handling
-        }
+        return { data: res };
     }
 
     async getFactoryDetails(

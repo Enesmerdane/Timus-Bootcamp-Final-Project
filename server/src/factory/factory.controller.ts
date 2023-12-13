@@ -18,6 +18,9 @@ import { FactoryInformation } from './model/factoryInformation.model';
 import { GetFactoryListDTO } from './dto/getFactoryList.dto';
 import { GetFactoryDetailsDTO } from './dto/getFactoryDetails.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
+import { handleError } from 'src/apiError/apiError';
+import { response } from 'express';
+import { ResponseDTO } from 'src/dto/response.dto';
 
 @Controller()
 export class FactoryController {
@@ -39,9 +42,17 @@ export class FactoryController {
                 queryOptions,
             );
 
-            return result.data.rows;
-        } catch (err) {
-            // TODO: Handle errors
+            return new ResponseDTO(
+                true,
+                200,
+                result.data.rows,
+                -1,
+                'Factory list successfully retrieved.',
+            );
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 
