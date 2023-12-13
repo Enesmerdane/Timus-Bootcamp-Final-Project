@@ -1,3 +1,11 @@
+export function handleError(error: any) {
+    if (error instanceof ApiError) {
+        return error;
+    } else {
+        return new ApiError(error.code, error.message, 400);
+    }
+}
+
 export class ApiError extends Error {
     constructor(
         public errorCode: number,

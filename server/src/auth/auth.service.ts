@@ -9,6 +9,7 @@ export class AuthService {
     constructor(@Inject('ELASTICSEARCH_CONNECTION') private elasticConn: any) {}
 
     async createUser(payload: User) {
+        throw new ApiError(2, 'Email already exists.', 400);
         // Check whether a user with given username exists
         const usernameExistsResult = await this.elasticConn.search({
             index: 'users_auth',

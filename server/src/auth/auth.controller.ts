@@ -18,7 +18,7 @@ import { User } from './model/user.model';
 import { JwtAuthGuard } from './jwt-auth-guard';
 import { generateAuthToken, validateRefreshToken } from './utils';
 import { ResponseDTO } from 'src/dto/response.dto';
-import { ApiError } from 'src/apiError/apiError';
+import { ApiError, handleError } from 'src/apiError/apiError';
 import { InputFieldExceptionFilter } from 'src/exception-filters/inputFieldExceptionFilter';
 
 @Controller('auth')
@@ -62,9 +62,9 @@ export class AuthController {
                 throw new ApiError(3, 'Invalid user role.', 400);
             }
         } catch (error) {
-            response
-                .status(error.statusCode)
-                .json({ errorCode: error.errorCode, message: error.message });
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 
