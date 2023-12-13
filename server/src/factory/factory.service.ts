@@ -65,10 +65,7 @@ export class FactoryService {
     }
 
     async changeFactoryDetails(factoryDetail: FactoryDetail) {
-        try {
-            console.log(factoryDetail);
-
-            const res = this.pgConn.query(`
+        await this.pgConn.query(`
                 UPDATE factory_details 
                 SET
                 start_date=TO_DATE('${factoryDetail.start_date}', 'DD/MM/YYYY'),
@@ -79,16 +76,10 @@ export class FactoryService {
                 discounted_fee=${factoryDetail.discounted_fee}
                 WHERE id='${factoryDetail.id}'
             `);
-        } catch (err) {
-            console.log(err);
-
-            // TODO: Handle errors
-        }
     }
 
     async changeFactoryInformation(factoryInformation: FactoryInformation) {
-        try {
-            const res = this.pgConn.query(`
+        await this.pgConn.query(`
                 UPDATE factory
                 SET
                 factory_name='${factoryInformation.factory_name}',
@@ -98,10 +89,5 @@ export class FactoryService {
                 free_user=${factoryInformation.free_user}
                 WHERE id='${factoryInformation.id}'
             `);
-        } catch (err) {
-            console.log(err);
-
-            // TODO: Handle errors
-        }
     }
 }

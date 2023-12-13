@@ -94,11 +94,13 @@ export class FactoryController {
         try {
             const factoryDetail: FactoryDetail = { ...body.data };
 
-            const result =
-                await this.factoryService.changeFactoryDetails(factoryDetail);
-        } catch (err) {
-            console.log(err);
-            // TODO: Handle Errors
+            await this.factoryService.changeFactoryDetails(factoryDetail);
+
+            return new ResponseDTO(true, 201);
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 
@@ -111,13 +113,14 @@ export class FactoryController {
         try {
             const factoryInformation: FactoryInformation = { ...body.data };
 
-            const result =
-                await this.factoryService.changeFactoryInformation(
-                    factoryInformation,
-                );
-        } catch (err) {
-            console.log(err);
-            // TODO: Handle Errors
+            await this.factoryService.changeFactoryInformation(
+                factoryInformation,
+            );
+            return new ResponseDTO(true, 201);
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 }
