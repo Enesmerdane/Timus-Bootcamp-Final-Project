@@ -28,4 +28,14 @@ SELECT * FROM factory_details where factory_id='722e4577-8a79-4ef1-a004-94ec891b
 
 SELECT * FROM factory_details WHERE factory_id='722e4577-8a79-4ef1-a004-94ec891bea82' LIMIT 5 OFFSET 0
 
-SELECT * FROM factory WHERE id='d31cdcd6-cfce-4652-a3a1-423723edc7f7'
+SELECT * FROM factory ORDER BY free_user
+
+SELECT * FROM factory WHERE id='d31cdcd6-cfce-4652-a3a1-423723edc7f7' 
+
+SELECT * FROM factory ORDER BY factory_name
+
+SELECT * FROM factory ORDER BY no_of_workers DESC
+            LIMIT 5 OFFSET 0
+			
+ALTER TABLE factory
+RENAME COLUMN name TO factory_name;
