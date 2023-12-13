@@ -71,9 +71,17 @@ export class FactoryController {
                 queryOptions,
             );
 
-            return factoryDetails;
-        } catch (err) {
-            // TODO: Handle errors
+            return new ResponseDTO(
+                true,
+                200,
+                factoryDetails.data,
+                -1,
+                'Factory list successfully retrieved.',
+            );
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 

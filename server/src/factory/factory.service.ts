@@ -51,9 +51,8 @@ export class FactoryService {
         if (!queryOptions) {
             queryOptions = { column_number: 2, desc: false };
         }
-        try {
-            const res = await this.pgConn.query(
-                `
+        const res = await this.pgConn.query(
+            `
                     SELECT * FROM factory_details WHERE factory_id='${factoryId}' 
                     ORDER BY ${
                         QueryColumnsFactoryDetail[queryOptions.column_number]
@@ -61,13 +60,8 @@ export class FactoryService {
                     ${queryOptions.desc ? 'DESC' : 'ASC'} 
                     LIMIT 5 OFFSET ${(pageNum - 1) * 5}
                 `,
-            );
-            return { data: res.rows };
-        } catch (err) {
-            console.log(err);
-
-            // TODO: Handle errors
-        }
+        );
+        return { data: res.rows };
     }
 
     async changeFactoryDetails(factoryDetail: FactoryDetail) {
