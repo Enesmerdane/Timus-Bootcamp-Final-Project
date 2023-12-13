@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     Post,
@@ -19,7 +20,6 @@ import { GetFactoryListDTO } from './dto/getFactoryList.dto';
 import { GetFactoryDetailsDTO } from './dto/getFactoryDetails.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 import { ApiError, handleError } from 'src/apiError/apiError';
-import { response } from 'express';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { AddFactoryTableColumnDTO } from './dto/addFactoryTableColumn.dto';
 import { AddFactoryDetailsTableColumnDTO } from './dto/addFactoryDetailsTableColumn.dto';
@@ -45,12 +45,14 @@ export class FactoryController {
                 queryOptions,
             );
 
-            return new ResponseDTO(
-                true,
-                200,
-                result.data.rows,
-                -1,
-                'Factory list successfully retrieved.',
+            response.send(
+                new ResponseDTO(
+                    true,
+                    200,
+                    result.data.rows,
+                    -1,
+                    'Factory list successfully retrieved.',
+                ),
             );
         } catch (error) {
             const apiError = handleError(error);
@@ -75,12 +77,14 @@ export class FactoryController {
                 queryOptions,
             );
 
-            return new ResponseDTO(
-                true,
-                200,
-                factoryDetails.data,
-                -1,
-                'Factory list successfully retrieved.',
+            response.send(
+                new ResponseDTO(
+                    true,
+                    200,
+                    factoryDetails.data,
+                    -1,
+                    'Factory list successfully retrieved.',
+                ),
             );
         } catch (error) {
             const apiError = handleError(error);
@@ -101,7 +105,7 @@ export class FactoryController {
 
             await this.factoryService.changeFactoryDetails(factoryDetail);
 
-            return new ResponseDTO(true, 201);
+            response.send(new ResponseDTO(true, 201));
         } catch (error) {
             const apiError = handleError(error);
 
@@ -122,7 +126,7 @@ export class FactoryController {
             await this.factoryService.changeFactoryInformation(
                 factoryInformation,
             );
-            return new ResponseDTO(true, 201);
+            response.send(new ResponseDTO(true, 201));
         } catch (error) {
             const apiError = handleError(error);
 
@@ -150,7 +154,7 @@ export class FactoryController {
 
             await this.factoryService.addColumnFactoryTable(columnOptions);
 
-            return new ResponseDTO(true, 201);
+            response.send(new ResponseDTO(true, 201));
         } catch (error) {
             const apiError = handleError(error);
             console.log('yes ', error);
@@ -158,6 +162,7 @@ export class FactoryController {
             response.status(apiError.statusCode).json(apiError);
         }
     }
+
     @UseGuards(JwtAuthGuard)
     @Put('factorydetailstable')
     async addFactoryDetailsTableColumn(
@@ -170,9 +175,10 @@ export class FactoryController {
                 addFactoryDetailsTableColumnDTO.column_options;
 
             // Check whether column exists
-            const exists = await this.factoryService.checkFactoryDetailsColumnExists(
-                columnOptions.column_name,
-            );
+            const exists =
+                await this.factoryService.checkFactoryDetailsColumnExists(
+                    columnOptions.column_name,
+                );
 
             if (exists) {
                 throw new ApiError(7, 'Column name already exists', 400);
@@ -181,11 +187,35 @@ export class FactoryController {
             await this.factoryService.addColumnFactoryDetailsTable(
                 columnOptions,
             );
-
-            return new ResponseDTO(true, 201);
+            response.send(new ResponseDTO(true, 201));
         } catch (error) {
-            console.log(error);
+            const apiError = handleError(error);
 
+            response.status(apiError.statusCode).json(apiError);
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete('factorytable')
+    async deleteFactoryTableColumn(@Body() body: any, @Res() response) {
+        try {
+            const columnName = body.column_name;
+
+            // Check whether column exists
+            const exists =
+                await this.factoryService.checkFactoryColumnExists(columnName);
+
+            if (!exists) {
+                // There is no meaning to show error message if column already doesnt exist
+                response.send(new ResponseDTO(true, 200));
+                return;
+            }
+
+            const name =
+                await this.factoryService.deleteColumnFactoryTable(columnName);
+
+            response.send(new ResponseDTO(true, 200));
+        } catch (error) {
             const apiError = handleError(error);
 
             response.status(apiError.statusCode).json(apiError);

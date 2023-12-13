@@ -142,4 +142,11 @@ export class FactoryService {
 
         return exists;
     }
+
+    async deleteColumnFactoryTable(name: string) {
+        await this.pgConn.query(`
+            ALTER TABLE factory
+            DROP ${name}
+        `);
+    }
 }

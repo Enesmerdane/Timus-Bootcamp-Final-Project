@@ -360,7 +360,7 @@ This api is designed to add column to the factory details table.
 {
     payload: {
         column_name: String,
-        column_type: "text" || "number" || "boolean" || "date"
+        column_type: "text" || "integer" || "decimal" || "boolean" || "date"
     }
         
 }
@@ -393,10 +393,7 @@ This api is designed to add column to the factory list table.
 
 ```
 {
-    payload: {
-        column_name: String
-    }
-        
+    column_name: String
 }
 ```
 
