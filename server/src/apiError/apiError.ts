@@ -26,4 +26,6 @@ export class ApiError extends Error {
  *
  * LOGIN
  * 6 --> back credentials
+ *
+ * 7 --> column name already exists
  */

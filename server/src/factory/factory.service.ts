@@ -97,14 +97,49 @@ export class FactoryService {
                 ? 'varchar(255)'
                 : columnOptions.column_type;
 
-        console.log(`
-        ALTER TABLE factory
-        ADD ${columnOptions.column_name} ${dataType}
-    `);
-
         await this.pgConn.query(`
             ALTER TABLE factory
             ADD ${columnOptions.column_name} ${dataType}
         `);
+    }
+
+    async addColumnFactoryDetailsTable(columnOptions: any) {
+        let dataType =
+            columnOptions.column_type === 'text'
+                ? 'varchar(255)'
+                : columnOptions.column_type;
+
+        await this.pgConn.query(`
+            ALTER TABLE factory_details
+            ADD ${columnOptions.column_name} ${dataType}
+        `);
+    }
+
+    async checkFactoryColumnExists(name: string) {
+        const result = await this.pgConn.query(`
+            SELECT column_name
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME='factory'
+        `);
+
+        const exists = result.rows.some((element) => {
+            return element.column_name === name;
+        });
+
+        return exists;
+    }
+
+    async checkFactoryDetailsColumnExists(name: string) {
+        const result = await this.pgConn.query(`
+            SELECT column_name
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME='factory_details'
+        `);
+
+        const exists = result.rows.some((element) => {
+            return element.column_name === name;
+        });
+
+        return exists;
     }
 }
