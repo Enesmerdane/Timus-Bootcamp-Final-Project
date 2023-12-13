@@ -11,7 +11,6 @@ import {
 
 import { FactoryService } from './factory.service';
 import { FactoryDetail } from './model/factoryDetail.model';
-import { plainToClass } from 'class-transformer';
 import { UpdateFactoryDetailDTO } from './dto/updateFactoryDetail.dto';
 import { UpdateFactoryInformationDTO } from './dto/updateFactoryInformation.dto';
 import { FactoryInformation } from './model/factoryInformation.model';
