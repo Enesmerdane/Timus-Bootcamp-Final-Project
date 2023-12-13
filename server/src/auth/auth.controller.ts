@@ -7,6 +7,7 @@ import {
     HttpCode,
     UseGuards,
     Request,
+    UseFilters,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; // for encrypting the password
 
@@ -16,14 +17,20 @@ import { AuthService } from './auth.service';
 import { User } from './model/user.model';
 import { JwtAuthGuard } from './jwt-auth-guard';
 import { generateAuthToken, validateRefreshToken } from './utils';
+import { ResponseDTO } from 'src/dto/response.dto';
+import { ApiError, handleError } from 'src/apiError/apiError';
+import { InputFieldExceptionFilter } from 'src/exception-filters/inputFieldExceptionFilter';
+import { RenewTokenDTO } from './dto/renewToken.dto';
+import { response } from 'express';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @UseFilters(new InputFieldExceptionFilter())
     @Post('register')
     @HttpCode(201)
-    async createUser(@Body() createUserDTO: CreateUserDTO) {
+    async createUser(@Body() createUserDTO: CreateUserDTO, @Res() response) {
         try {
             // Encrypt password
             const salt = await bcrypt.genSalt(10);
@@ -37,16 +44,29 @@ export class AuthController {
                 new Date(),
             );
 
-            if (createUserDTO.role === 0) {
-                // TODO: call create admin service
-            } else if (createUserDTO.role === 1) {
-                // Call create normal user service
-                return await this.authService.createUser(user);
+            if (createUserDTO.role === 1 || createUserDTO.role === 0) {
+                const resultData = await this.authService.createUser(user);
+
+                if (resultData.result === 'created') {
+                    const responseDTO = new ResponseDTO();
+                    responseDTO.result = true;
+                    responseDTO.statusCode = 201;
+                    responseDTO.payload = {};
+                    return responseDTO;
+                } else {
+                    throw new ApiError(
+                        4,
+                        'Unexpected error while creating user.',
+                        500,
+                    );
+                }
             } else {
-                throw new Error();
+                throw new ApiError(3, 'Invalid user role.', 400);
             }
-        } catch (err) {
-            // TODO: Error handling
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 
@@ -64,9 +84,19 @@ export class AuthController {
             response
                 .cookie('x-access-token', token)
                 .cookie('x-refresh-token', refreshToken)
-                .json({ message: 'Login successful', token, refreshToken });
-        } catch (err) {
-            // TODO: Error handling
+                .json(
+                    new ResponseDTO(
+                        true,
+                        200,
+                        { token, refreshToken },
+                        0,
+                        'Login successful',
+                    ),
+                );
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 
@@ -77,7 +107,7 @@ export class AuthController {
     }
 
     @Post('renewtoken')
-    async renewAccessToken(@Body() body: any) {
+    async renewAccessToken(@Body() body: RenewTokenDTO) {
         try {
             const refreshToken = body.refreshToken;
             const { sub: id, email } = validateRefreshToken(refreshToken);
@@ -85,9 +115,10 @@ export class AuthController {
             const accessToken = generateAuthToken(id, email);
 
             return { accessToken, refreshToken };
-        } catch (err) {
-            return err;
-            // TODO: handle error
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 }
