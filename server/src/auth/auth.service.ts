@@ -84,25 +84,4 @@ export class AuthService {
             throw new ApiError(6, 'Bad credentials', 400);
         }
     }
-
-    async validateUser(email: string, password: string): Promise<any> {
-        const emailExistsResult = await this.elasticConn.search({
-            index: 'users_auth',
-            query: {
-                match_phrase: {
-                    email: email,
-                },
-            },
-        });
-        //const user = await this.usersService.findOne(username);
-        if (
-            await bcrypt.compare(
-                password,
-                emailExistsResult.hits.hits[0]._source.hashedPassword,
-            )
-        ) {
-            return email;
-        }
-        return null;
-    }
 }
