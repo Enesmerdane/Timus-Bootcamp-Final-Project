@@ -20,6 +20,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 import { handleError } from 'src/apiError/apiError';
 import { response } from 'express';
 import { ResponseDTO } from 'src/dto/response.dto';
+import { AddFactoryTableColumnDTO } from './dto/addFactoryTableColumn.dto';
 
 @Controller()
 export class FactoryController {
@@ -115,6 +116,24 @@ export class FactoryController {
             await this.factoryService.changeFactoryInformation(
                 factoryInformation,
             );
+            return new ResponseDTO(true, 201);
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('factorytable')
+    async addFactoryTableColumn(
+        @Body() addFactoryTableColumnDTO: AddFactoryTableColumnDTO,
+    ) {
+        try {
+            const columnOptions = addFactoryTableColumnDTO.column_options;
+
+            await this.factoryService.addColumnFactoryTable(columnOptions);
+
             return new ResponseDTO(true, 201);
         } catch (error) {
             const apiError = handleError(error);

@@ -317,16 +317,16 @@ This api is designed to change factory details.
 }
 ```
 
-<h4>7. Add Column to the Factory List Table PUT /api/factory/</h4>
+<h4>7. Add Column to the Factory List Table PUT /api/factorytable</h4>
 This api is designed to add column to the factory list table.
 
 <strong>Request body:</strong>
 <br>
 ```
 {
-    payload: {
-        column_name: String,
-        column_type: "text" || "number" || "boolean" || "date"
+    column_options: {
+        column_name: string,
+        column_type: "text" || "integer" || "decimal" || "boolean" || "date"
     }       
 }
 ```

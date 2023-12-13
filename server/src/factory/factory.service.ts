@@ -90,4 +90,21 @@ export class FactoryService {
                 WHERE id='${factoryInformation.id}'
             `);
     }
+
+    async addColumnFactoryTable(columnOptions: any) {
+        let dataType =
+            columnOptions.column_type === 'text'
+                ? 'varchar(255)'
+                : columnOptions.column_type;
+
+        console.log(`
+        ALTER TABLE factory
+        ADD ${columnOptions.column_name} ${dataType}
+    `);
+
+        await this.pgConn.query(`
+            ALTER TABLE factory
+            ADD ${columnOptions.column_name} ${dataType}
+        `);
+    }
 }
