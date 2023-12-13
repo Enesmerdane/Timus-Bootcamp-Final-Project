@@ -2,20 +2,38 @@ import { Inject, Injectable } from '@nestjs/common';
 import { FactoryDetail } from './model/factoryDetail.model';
 import { FactoryInformation } from './model/factoryInformation.model';
 
+enum QueryColumns {
+    'id',
+    'factory_name',
+    'subscription_begin_date',
+    'subscription_end_date',
+    'no_of_workers',
+    'free_user',
+}
+
 @Injectable()
 export class FactoryService {
     constructor(@Inject('PG_CONNECTION') private pgConn: any) {}
 
-    async getFactoryList(pageNum: number) {
+    async getFactoryList(pageNum: number, queryOptions: any) {
         try {
+            if (!queryOptions) {
+                queryOptions = { column_number: 1, desc: false };
+            }
+
             const res = await this.pgConn.query(
                 `
-                    SELECT * FROM factory LIMIT 5 OFFSET ${(pageNum - 1) * 5}
+                    SELECT * FROM factory 
+                    ORDER BY ${QueryColumns[queryOptions.column_number]}
+                    ${queryOptions.desc ? 'DESC' : 'ASC'} 
+                    LIMIT 5 OFFSET ${(pageNum - 1) * 5} 
                 `,
             );
 
             return { data: res };
         } catch (err) {
+            console.log(err);
+
             // TODO: Error handling
         }
     }
@@ -64,7 +82,7 @@ export class FactoryService {
             const res = this.pgConn.query(`
                 UPDATE factory
                 SET
-                name='${factoryInformation.name}',
+                factory_name='${factoryInformation.factory_name}',
                 subscription_begin_date=TO_DATE('${factoryInformation.subscription_start_date}', 'DD/MM/YYYY'),
                 subscription_end_date=TO_DATE('${factoryInformation.subscription_end_date}', 'DD/MM/YYYY'),
                 no_of_workers=${factoryInformation.no_of_workers},

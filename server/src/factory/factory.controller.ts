@@ -6,17 +6,26 @@ import { plainToClass } from 'class-transformer';
 import { UpdateFactoryDetailDTO } from './dto/updateFactoryDetail.dto';
 import { UpdateFactoryInformationDTO } from './dto/updateFactoryInformation.dto';
 import { FactoryInformation } from './model/factoryInformation.model';
+import { GetFactoryListDTO } from './dto/getFactoryList.dto';
 
 @Controller()
 export class FactoryController {
     constructor(private readonly factoryService: FactoryService) {}
 
     @Get('factory')
-    async getFactoryList(@Query('page') page) {
+    async getFactoryList(
+        @Query('page') page,
+        @Body() getFactoryListDTO: GetFactoryListDTO,
+    ) {
         try {
+            const queryOptions = getFactoryListDTO.order_options;
+
             const pageNum = Number(page) < 0 ? 0 : Number(page);
 
-            const result = await this.factoryService.getFactoryList(pageNum);
+            const result = await this.factoryService.getFactoryList(
+                pageNum,
+                queryOptions,
+            );
 
             return result.data.rows;
         } catch (err) {
