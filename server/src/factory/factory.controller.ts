@@ -211,8 +211,37 @@ export class FactoryController {
                 return;
             }
 
-            const name =
-                await this.factoryService.deleteColumnFactoryTable(columnName);
+            await this.factoryService.deleteColumnFactoryTable(columnName);
+
+            response.send(new ResponseDTO(true, 200));
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete('factorydetailstable')
+    async deleteFactoryDetailsTableColumn(@Body() body: any, @Res() response) {
+        try {
+            const columnName = body.column_name;
+
+            // Check whether column exists
+            const exists =
+                await this.factoryService.checkFactoryDetailsColumnExists(
+                    columnName,
+                );
+
+            if (!exists) {
+                // There is no meaning to show error message if column already doesnt exist
+                response.send(new ResponseDTO(true, 200));
+                return;
+            }
+
+            await this.factoryService.deleteColumnFactoryDetailsTable(
+                columnName,
+            );
 
             response.send(new ResponseDTO(true, 200));
         } catch (error) {
