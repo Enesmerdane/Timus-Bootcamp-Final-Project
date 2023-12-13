@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
+const { xss } = require('express-xss-sanitizer');
 
 require('dotenv').config();
 
@@ -10,10 +11,12 @@ async function bootstrap() {
     // Initiate Nest server
     const app = await NestFactory.create(AppModule);
 
+    app.use(xss());
+
     app.useGlobalPipes(new ValidationPipe());
 
     // wrap AppModule with useContainer (for custom decorators)
-    useContainer(app.select(AppModule), {fallbackOnErrors: true})
+    useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
     app.use(cookieParser());
 
