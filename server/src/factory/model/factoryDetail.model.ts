@@ -7,7 +7,6 @@ export class FactoryDetail {
         public readonly unit: string,
         public readonly usage: number,
         public readonly usage_fee: number,
-        public readonly discounted_fee: boolean,
-        public readonly extra_columns: [],
+        public readonly discounted_fee: boolean
     ) {}
 }
