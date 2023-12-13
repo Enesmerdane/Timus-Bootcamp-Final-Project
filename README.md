@@ -74,10 +74,10 @@ This api is designed for new user creation. User information and type are includ
 <br>
 ```
 {
-    username: String,
-    email: String,
-    password: String,
-    role: Number
+    username: string,
+    email: string,
+    password: string,
+    role: number
 }
 ```
 
@@ -85,7 +85,11 @@ This api is designed for new user creation. User information and type are includ
 
 ```
 {
-    result: Boolean
+    result: boolean,
+    statusCode: number,
+    payload: {},
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -98,8 +102,8 @@ This api is designed for login use case. Email and password are included in the 
 <br>
 ```
 {
-    email: String,
-    password: String,
+    email: string,
+    password: string,
 }
 ```
 
@@ -107,27 +111,40 @@ This api is designed for login use case. Email and password are included in the 
 
 ```
 {
-    result: Boolean,
+    result: boolean,
+    statusCode: number,
     payload: {
-        access_token: String,
-        refresh_token: String 
-    }
+        access_token: string,
+        refresh_token: string 
+    },
+    errorCode: number,
+    message: string
 }
 ```
 
 <h4>3. Get Factory List GET /api/factory</h4>
-This api is designed to retrieve all factories with their summary information. 
+This api is designed to retrieve all factories with their summary information.
+
 
 <br>If there are other columns that user added, they will be returned in the response as well.
 
-<br>
-<br>
 
 <strong>Request body:</strong>
 <br>
 ```
 {
-    page: Number
+    order_options: {
+        column_number: number,
+        desc: boolean
+    };
+}
+```
+
+<strong>Query parameters:</strong>
+<br>
+```
+{
+    page: number
 }
 ```
 
@@ -144,6 +161,7 @@ This api is designed to retrieve all factories with their summary information.
 ```
 {
     result: Boolean,
+    statusCode: number,
     payload: {
         factoryList: [
             {
@@ -155,7 +173,9 @@ This api is designed to retrieve all factories with their summary information.
                 free_user: boolean
             }
         ]
-    }
+    },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -168,7 +188,18 @@ This api is designed to retrieve factory details.
 <br>
 ```
 {
-    page: Number
+    order_options: {
+        column_number: number,
+        desc: boolean
+    };
+}
+```
+
+<strong>Query parameters:</strong>
+<br>
+```
+{
+    page: number
 }
 ```
 
@@ -185,6 +216,7 @@ This api is designed to retrieve factory details.
 ```
 {
     result: Boolean,
+    statusCode: number,
     payload: {
         factoryDetailsList: [
             {
@@ -196,7 +228,9 @@ This api is designed to retrieve factory details.
                 discounted_fee: Boolean,
             }
         ]
-    }
+    },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -209,7 +243,7 @@ This api is designed to change factory details.
 <br>
 ```
 {
-    payload: 
+    data: 
         {
             factory_id: String,
             date_range: String,
@@ -233,7 +267,11 @@ This api is designed to change factory details.
 
 ```
 {
-    result: Boolean
+    result: Boolean,
+    statusCode: number,
+    payload: { },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -243,10 +281,10 @@ This api is designed to change factory details.
 <br>Any columns added later by the users, will be included in the request body as well.
 
 <strong>Request body:</strong>
-<br>
+
 ```
 {
-   factoryDetailsList: 
+   data: 
         {
             factory_id: String,
             date_range: String,
@@ -271,22 +309,25 @@ This api is designed to change factory details.
 
 ```
 {
-    result: Boolean
+    result: Boolean,
+    statusCode: number,
+    payload: { },
+    errorCode: number,
+    message: string
 }
 ```
 
-<h4>7. Add Column to the Factory List Table PUT /api/factory/</h4>
+<h4>7. Add Column to the Factory List Table PUT /api/factorytable</h4>
 This api is designed to add column to the factory list table.
 
 <strong>Request body:</strong>
 <br>
 ```
 {
-    payload: {
-        column_name: String,
-        column_type: "text" || "number" || "boolean" || "date" || "date_range"
-    }
-        
+    column_options: {
+        column_name: string,
+        column_type: "text" || "integer" || "decimal" || "boolean" || "date"
+    }       
 }
 ```
 
@@ -303,7 +344,10 @@ This api is designed to add column to the factory list table.
 ```
 {
     result: Boolean,
-    result_id: Number 
+    statusCode: number,
+    payload: { },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -311,12 +355,12 @@ This api is designed to add column to the factory list table.
 This api is designed to add column to the factory details table.
 
 <strong>Request body:</strong>
-<br>
+
 ```
 {
     payload: {
         column_name: String,
-        column_type: "text" || "number" || "boolean" || "date" || "date_range"
+        column_type: "text" || "integer" || "decimal" || "boolean" || "date"
     }
         
 }
@@ -335,7 +379,10 @@ This api is designed to add column to the factory details table.
 ```
 {
     result: Boolean,
-    result_id: Number 
+    statusCode: number,
+    payload: { },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -343,18 +390,15 @@ This api is designed to add column to the factory details table.
 This api is designed to add column to the factory list table.
 
 <strong>Request body:</strong>
-<br>
+
 ```
 {
-    payload: {
-        column_name: String
-    }
-        
+    column_name: String
 }
 ```
 
 <strong>Request header:</strong>
-<br>
+
 ```
 {
     "Authorization" : "Bearer TOKEN" 
@@ -366,7 +410,10 @@ This api is designed to add column to the factory list table.
 ```
 {
     result: Boolean,
-    result_id: Number 
+    statusCode: number,
+    payload: { },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -380,7 +427,6 @@ This api is designed to add column to the factory details table.
     payload: {
         column_name: String
     }
-        
 }
 ```
 
@@ -397,7 +443,10 @@ This api is designed to add column to the factory details table.
 ```
 {
     result: Boolean,
-    result_id: Number 
+    statusCode: number,
+    payload: { },
+    errorCode: number,
+    message: string
 }
 ```
 
@@ -406,13 +455,10 @@ This api is designed to refresh access token of the user details table.
 
 <strong>Request body:</strong>
 'token' in the body represents refresh token
-<br>
+
 ```
 {
-    payload: {
-        token: String
-    }
-        
+    refreshToken: String   
 }
 ```
 
@@ -421,9 +467,11 @@ This api is designed to refresh access token of the user details table.
 ```
 {
     result: Boolean,
-    result_id: Number
-    payload: {
-        access_token: String
-    } 
+    statusCode: number,
+    payload: { 
+        token: string
+    },
+    errorCode: number,
+    message: string
 }
 ```
