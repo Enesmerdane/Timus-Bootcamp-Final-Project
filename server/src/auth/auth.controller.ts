@@ -20,6 +20,8 @@ import { generateAuthToken, validateRefreshToken } from './utils';
 import { ResponseDTO } from 'src/dto/response.dto';
 import { ApiError, handleError } from 'src/apiError/apiError';
 import { InputFieldExceptionFilter } from 'src/exception-filters/inputFieldExceptionFilter';
+import { RenewTokenDTO } from './dto/renewToken.dto';
+import { response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -105,7 +107,7 @@ export class AuthController {
     }
 
     @Post('renewtoken')
-    async renewAccessToken(@Body() body: any) {
+    async renewAccessToken(@Body() body: RenewTokenDTO) {
         try {
             const refreshToken = body.refreshToken;
             const { sub: id, email } = validateRefreshToken(refreshToken);
@@ -113,9 +115,10 @@ export class AuthController {
             const accessToken = generateAuthToken(id, email);
 
             return { accessToken, refreshToken };
-        } catch (err) {
-            return err;
-            // TODO: handle error
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 }
