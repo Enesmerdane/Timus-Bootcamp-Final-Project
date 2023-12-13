@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Put,
+    Query,
+    UseGuards,
+} from '@nestjs/common';
 
 import { FactoryService } from './factory.service';
 import { FactoryDetail } from './model/factoryDetail.model';
@@ -8,11 +17,13 @@ import { UpdateFactoryInformationDTO } from './dto/updateFactoryInformation.dto'
 import { FactoryInformation } from './model/factoryInformation.model';
 import { GetFactoryListDTO } from './dto/getFactoryList.dto';
 import { GetFactoryDetailsDTO } from './dto/getFactoryDetails.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 
 @Controller()
 export class FactoryController {
     constructor(private readonly factoryService: FactoryService) {}
 
+    @UseGuards(JwtAuthGuard)
     @Get('factory')
     async getFactoryList(
         @Query('page') page,
@@ -34,6 +45,7 @@ export class FactoryController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('factory_details/:factory_id')
     async getFactoryDetails(
         @Param('factory_id') factoryId,
@@ -54,6 +66,7 @@ export class FactoryController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('factory_details/:factory_details_id')
     async changeFactoryDetails(
         @Param('factory_details_id') factoryDetailsId,
@@ -70,6 +83,7 @@ export class FactoryController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('factory/:factory_id')
     async changeFactoryInformation(
         @Param('factory_id') UpdateFactoryDetailDTO,
