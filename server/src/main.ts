@@ -5,6 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 const { xss } = require('express-xss-sanitizer');
 import { rateLimit } from 'express-rate-limit';
+import { ResponseDTO } from './dto/response.dto';
+import { InputFieldException } from './exceptions/InputFieldException';
 
 require('dotenv').config();
 
@@ -25,7 +27,35 @@ async function bootstrap() {
     // Apply the rate limiting middleware to all requests.
     app.use(limiter);
 
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(
+        new ValidationPipe(
+            {
+                exceptionFactory: (errors) => {
+                    const resultMsg =
+                        errors[0].constraints[
+                            Object.keys(errors[0].constraints)[0]
+                        ];
+                    return new InputFieldException(resultMsg);
+                },
+                stopAtFirstError: true,
+            },
+
+            //     {
+            //     exceptionFactory: (errors) => {
+            //         const responseDTO = new ResponseDTO();
+            //         responseDTO.errorCode = 5;
+            //         responseDTO.message =
+            //             errors[0].constraints[
+            //                 Object.keys(errors[0].constraints)[0]
+            //             ];
+            //         responseDTO.result = false;
+            //         responseDTO.statusCode = 400;
+
+            //         return responseDTO;
+            //     },
+            // }
+        ),
+    );
 
     // wrap AppModule with useContainer (for custom decorators)
     useContainer(app.select(AppModule), { fallbackOnErrors: true });
