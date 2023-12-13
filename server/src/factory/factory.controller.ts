@@ -157,7 +157,7 @@ export class FactoryController {
             response.send(new ResponseDTO(true, 201));
         } catch (error) {
             const apiError = handleError(error);
-            console.log('yes ', error);
+            // console.log('yes ', error);
 
             response.status(apiError.statusCode).json(apiError);
         }

@@ -43,7 +43,7 @@ export class AuthService {
             document: payload,
         });
 
-        console.log(saveUserResult);
+        // console.log(saveUserResult);
 
         return saveUserResult;
     }
