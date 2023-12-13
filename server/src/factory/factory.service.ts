@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { FactoryDetail } from './model/factoryDetail.model';
 import { FactoryInformation } from './model/factoryInformation.model';
 
-enum QueryColumns {
+enum QueryColumnsFactory {
     'id',
     'factory_name',
     'subscription_begin_date',
@@ -11,11 +11,22 @@ enum QueryColumns {
     'free_user',
 }
 
+enum QueryColumnsFactoryDetail {
+    'id',
+    'factory_id',
+    'start_date',
+    'end_date',
+    'unit',
+    'usage',
+    'usage_fee',
+    'discounted_fee',
+}
+
 @Injectable()
 export class FactoryService {
     constructor(@Inject('PG_CONNECTION') private pgConn: any) {}
 
-    async getFactoryList(pageNum: number, queryOptions: any) {
+    async getFactoryList(pageNum: number, queryOptions?: any) {
         try {
             if (!queryOptions) {
                 queryOptions = { column_number: 1, desc: false };
@@ -24,7 +35,7 @@ export class FactoryService {
             const res = await this.pgConn.query(
                 `
                     SELECT * FROM factory 
-                    ORDER BY ${QueryColumns[queryOptions.column_number]}
+                    ORDER BY ${QueryColumnsFactory[queryOptions.column_number]}
                     ${queryOptions.desc ? 'DESC' : 'ASC'} 
                     LIMIT 5 OFFSET ${(pageNum - 1) * 5} 
                 `,
@@ -38,13 +49,23 @@ export class FactoryService {
         }
     }
 
-    async getFactoryDetails(factoryId: string, pageNum: number) {
+    async getFactoryDetails(
+        factoryId: string,
+        pageNum: number,
+        queryOptions?: any,
+    ) {
+        if (!queryOptions) {
+            queryOptions = { column_number: 2, desc: false };
+        }
         try {
             const res = await this.pgConn.query(
                 `
-                    SELECT * FROM factory_details WHERE factory_id='${factoryId}' LIMIT 5 OFFSET ${
-                        (pageNum - 1) * 5
+                    SELECT * FROM factory_details WHERE factory_id='${factoryId}' 
+                    ORDER BY ${
+                        QueryColumnsFactoryDetail[queryOptions.column_number]
                     }
+                    ${queryOptions.desc ? 'DESC' : 'ASC'} 
+                    LIMIT 5 OFFSET ${(pageNum - 1) * 5}
                 `,
             );
             return { data: res.rows };

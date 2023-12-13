@@ -7,6 +7,7 @@ import { UpdateFactoryDetailDTO } from './dto/updateFactoryDetail.dto';
 import { UpdateFactoryInformationDTO } from './dto/updateFactoryInformation.dto';
 import { FactoryInformation } from './model/factoryInformation.model';
 import { GetFactoryListDTO } from './dto/getFactoryList.dto';
+import { GetFactoryDetailsDTO } from './dto/getFactoryDetails.dto';
 
 @Controller()
 export class FactoryController {
@@ -37,11 +38,14 @@ export class FactoryController {
     async getFactoryDetails(
         @Param('factory_id') factoryId,
         @Query('page') pageNum,
+        @Body() getFactoryDetailsDTO: GetFactoryDetailsDTO,
     ) {
         try {
+            const queryOptions = getFactoryDetailsDTO.order_options;
             const factoryDetails = await this.factoryService.getFactoryDetails(
                 factoryId,
                 Number(pageNum),
+                queryOptions,
             );
 
             return factoryDetails;
