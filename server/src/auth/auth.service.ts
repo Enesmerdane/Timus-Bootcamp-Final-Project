@@ -9,7 +9,6 @@ export class AuthService {
     constructor(@Inject('ELASTICSEARCH_CONNECTION') private elasticConn: any) {}
 
     async createUser(payload: User) {
-        throw new ApiError(2, 'Email already exists.', 400);
         // Check whether a user with given username exists
         const usernameExistsResult = await this.elasticConn.search({
             index: 'users_auth',
@@ -50,44 +49,39 @@ export class AuthService {
     }
 
     async loginUser(email: string, password: string) {
-        try {
-            // Check whether a user with given username exists
-            const emailExistsResult = await this.elasticConn.search({
-                index: 'users_auth',
-                query: {
-                    match_phrase: {
-                        email: email,
-                    },
+        // Check whether a user with given username exists
+        const emailExistsResult = await this.elasticConn.search({
+            index: 'users_auth',
+            query: {
+                match_phrase: {
+                    email: email,
                 },
-            });
+            },
+        });
 
-            if (emailExistsResult.hits.total.value <= 0) {
-                // TODO: Error handling
-                return { error: 'user not found' };
-            }
+        if (emailExistsResult.hits.total.value <= 0) {
+            throw new ApiError(6, 'Bad credentials', 400);
+        }
 
-            if (
-                await bcrypt.compare(
-                    password,
-                    emailExistsResult.hits.hits[0]._source.hashedPassword,
-                )
-            ) {
-                const token = generateAuthToken(
-                    emailExistsResult.hits.hits[0]._id,
-                    email,
-                );
+        if (
+            await bcrypt.compare(
+                password,
+                emailExistsResult.hits.hits[0]._source.hashedPassword,
+            )
+        ) {
+            const token = generateAuthToken(
+                emailExistsResult.hits.hits[0]._id,
+                email,
+            );
 
-                const refreshToken = generateRefreshToken(
-                    emailExistsResult.hits.hits[0]._id,
-                    email,
-                );
+            const refreshToken = generateRefreshToken(
+                emailExistsResult.hits.hits[0]._id,
+                email,
+            );
 
-                return { token, refreshToken };
-            } else {
-                return { msg: 'fail' };
-            }
-        } catch (err) {
-            // TODO: Error handling
+            return { token, refreshToken };
+        } else {
+            throw new ApiError(6, 'Bad credentials', 400);
         }
     }
 

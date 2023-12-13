@@ -82,9 +82,19 @@ export class AuthController {
             response
                 .cookie('x-access-token', token)
                 .cookie('x-refresh-token', refreshToken)
-                .json({ message: 'Login successful', token, refreshToken });
-        } catch (err) {
-            // TODO: Error handling
+                .json(
+                    new ResponseDTO(
+                        true,
+                        200,
+                        { token, refreshToken },
+                        0,
+                        'Login successful',
+                    ),
+                );
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
         }
     }
 
