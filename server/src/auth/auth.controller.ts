@@ -94,6 +94,8 @@ export class AuthController {
                     ),
                 );
         } catch (error) {
+            //console.log(error);
+
             const apiError = handleError(error);
 
             response.status(apiError.statusCode).json(apiError);

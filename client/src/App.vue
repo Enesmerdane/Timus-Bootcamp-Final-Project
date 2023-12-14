@@ -4,8 +4,17 @@
   Hello world
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useAuthStore } from './stores/auth'
+
+export default {
+    created: () => {
+        const authStore = useAuthStore()
+
+        authStore.login('enes@gmail.com', '12312312')
+    }
+}
 
 </script>
 
