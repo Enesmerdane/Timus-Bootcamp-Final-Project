@@ -143,7 +143,7 @@ export class FactoryController {
         @Res() response,
     ) {
         try {
-            console.log(addFactoryTableColumnDTO);
+            //console.log(addFactoryTableColumnDTO);
 
             const columnOptions = addFactoryTableColumnDTO.column_options;
 
@@ -160,7 +160,7 @@ export class FactoryController {
 
             response.send(new ResponseDTO(true, 201));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
 
             const apiError = handleError(error);
 
