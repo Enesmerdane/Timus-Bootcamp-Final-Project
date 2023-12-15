@@ -143,6 +143,8 @@ export class FactoryController {
         @Res() response,
     ) {
         try {
+            console.log(addFactoryTableColumnDTO);
+
             const columnOptions = addFactoryTableColumnDTO.column_options;
 
             // Check whether column exists
@@ -158,6 +160,8 @@ export class FactoryController {
 
             response.send(new ResponseDTO(true, 201));
         } catch (error) {
+            console.log(error);
+
             const apiError = handleError(error);
 
             response.status(apiError.statusCode).json(apiError);

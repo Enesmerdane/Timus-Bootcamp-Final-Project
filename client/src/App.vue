@@ -54,15 +54,17 @@ export default {
         //     paid: true
         // })
 
-        factoryStore.changeFactoryInformation("2ba133bd-574e-4dc9-9307-e0d184070373", {
-            id:"2ba133bd-574e-4dc9-9307-e0d184070373",
-            factory_name:"agasgag",
-            subscription_begin_date:"01/01/1870",
-            subscription_end_date:"01/01/1871",
-            no_of_workers:6700,
-            free_user:false,
-            ceo: "enes"
-        })
+        // factoryStore.changeFactoryInformation("2ba133bd-574e-4dc9-9307-e0d184070373", {
+        //     id:"2ba133bd-574e-4dc9-9307-e0d184070373",
+        //     factory_name:"agasgag",
+        //     subscription_begin_date:"01/01/1870",
+        //     subscription_end_date:"01/01/1871",
+        //     no_of_workers:6700,
+        //     free_user:false,
+        //     ceo: "enes"
+        // })
+
+        factoryStore.addColumnFactoryTable('newColumn1', 'text')
       }
     }
 }
