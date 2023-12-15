@@ -3,6 +3,7 @@
   <RouterView />
   <button @click="action">Action</button>
   <button @click="action2">Action2</button>
+  <button @click="action3">Action3</button>
   Hello world
 </template>
 
@@ -33,7 +34,26 @@ export default {
         //authStore.renewToken()
         const factoryStore = useFactoryStore()
         //factoryStore.loadFactoryList(1)
-        factoryStore.loadFactoryDetailsList("722e4577-8a79-4ef1-a004-94ec891bea82", 1)
+        factoryStore.loadFactoryDetailsList("722e4577-8a79-4ef1-a004-94ec891bea82", 2)
+      },
+      action3(details){
+        const authStore = useAuthStore()
+
+        const factoryStore = useFactoryStore()
+        factoryStore.changeFactoryDetail(
+          "dbf28db3-b453-8e96-ba09-3d7674d86554",
+          {
+          id:"dbf28db3-b453-8e96-ba09-3d7674d86554",
+          factory_id:"722e4577-8a79-4ef1-a004-94ec891bea82",
+          start_date:"12/12/2021",
+          end_date:"12/12/2021",
+          unit:"cal",
+          usage:0,
+          usage_fee:0,
+          discounted_fee:true,
+          paid: true
+      }
+        )
       }
     }
 }
