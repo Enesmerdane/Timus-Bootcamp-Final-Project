@@ -25,6 +25,26 @@ export const useAuthStore = defineStore('counter', {
             } catch (error) {
                 console.log(error)
             }
-        }, //async register(email)
+        },
+        async register(email: string, password: string, username: string, role: number) {
+            try {
+                const result = await axios({
+                    method: 'post',
+                    url: '/api/auth/register',
+                    data: JSON.stringify({
+                        email,
+                        password,
+                        username,
+                        role
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                console.log(result)
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 })
