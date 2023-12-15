@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useAuthStore = defineStore('pageState', {
+export const usePageStore = defineStore('pageState', {
     state: () => ({ loading: false }),
     getters: {
         getLoading: (state) => state.loading
