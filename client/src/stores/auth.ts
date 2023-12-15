@@ -89,8 +89,6 @@ export const useAuthStore = defineStore('auth', {
         },
         async renewToken() {
             try {
-                console.log(this.refreshToken)
-
                 const res = await axios({
                     method: 'post',
                     url: 'api/auth/renewtoken',
@@ -105,6 +103,7 @@ export const useAuthStore = defineStore('auth', {
                 console.log(res)
                 console.log(this.$state)
             } catch (error) {
+                this.refreshToken = null
                 console.log(error)
             }
         }

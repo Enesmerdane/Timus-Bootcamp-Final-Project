@@ -9,6 +9,7 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
+import { useFactoryListStore } from './stores/factoryList'
 
 export default {
     created: () => {
@@ -29,7 +30,9 @@ export default {
       },
       action2(){
         const authStore = useAuthStore()
-        authStore.renewToken()
+        //authStore.renewToken()
+        const factoryStore = useFactoryListStore()
+        factoryStore.loadFactoryList(1)
       }
     }
 }
