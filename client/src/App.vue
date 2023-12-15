@@ -10,11 +10,14 @@
   <RouterLink to='/factorydetails'>Factory Details</RouterLink>
   
   <RouterView />
+  <button @click="action">Action</button>
+  <button @click="action2">Action2</button>
+  <button @click="action3">Action3</button>
+  Hello world
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-
 import { useAuthStore } from './stores/auth'
 import { useFactoryStore } from './stores/factory'
 
@@ -30,22 +33,22 @@ export default {
     },
     methods: {
       action(){
-        // const authStore = useAuthStore()
-        // //authStore.logout()
-        // authStore.login('enes2@gmail.com', '12312312')
+        //const authStore = useAuthStore()
+        //authStore.logout()
+        //authStore.login('enes2@gmail.com', '12312312')
         //authStore.renewToken()
       },
       action2(){
-        // const authStore = useAuthStore()
-        // //authStore.renewToken()
-        // const factoryStore = useFactoryStore()
-        // factoryStore.loadFactoryList(1)
+        //const authStore = useAuthStore()
+        //authStore.renewToken()
+        //const factoryStore = useFactoryStore()
+        //factoryStore.loadFactoryList(1)
         //factoryStore.loadFactoryDetailsList("722e4577-8a79-4ef1-a004-94ec891bea82", 2)
       },
       action3(details){
-        // const authStore = useAuthStore()
+        //const authStore = useAuthStore()
 
-        // const factoryStore = useFactoryStore()
+        //const factoryStore = useFactoryStore()
         // factoryStore.changeFactoryDetail(
         //     "dbf28db3-b453-8e96-ba09-3d7674d86554",
         //     {
@@ -76,9 +79,3 @@ export default {
       }
     }
 }
-
-</script>
-
-<style scoped>
-
-</style>

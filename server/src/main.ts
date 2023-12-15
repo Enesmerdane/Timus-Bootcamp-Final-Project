@@ -7,6 +7,7 @@ const { xss } = require('express-xss-sanitizer');
 import { rateLimit } from 'express-rate-limit';
 import { ResponseDTO } from './dto/response.dto';
 import { InputFieldException } from './exceptions/InputFieldException';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 require('dotenv').config();
 
@@ -28,33 +29,16 @@ async function bootstrap() {
     app.use(limiter);
 
     app.useGlobalPipes(
-        new ValidationPipe(
-            {
-                exceptionFactory: (errors) => {
-                    const resultMsg =
-                        errors[0].constraints[
-                            Object.keys(errors[0].constraints)[0]
-                        ];
-                    return new InputFieldException(resultMsg);
-                },
-                stopAtFirstError: true,
+        new ValidationPipe({
+            exceptionFactory: (errors) => {
+                const resultMsg =
+                    errors[0].constraints[
+                        Object.keys(errors[0].constraints)[0]
+                    ];
+                return new InputFieldException(resultMsg);
             },
-
-            //     {
-            //     exceptionFactory: (errors) => {
-            //         const responseDTO = new ResponseDTO();
-            //         responseDTO.errorCode = 5;
-            //         responseDTO.message =
-            //             errors[0].constraints[
-            //                 Object.keys(errors[0].constraints)[0]
-            //             ];
-            //         responseDTO.result = false;
-            //         responseDTO.statusCode = 400;
-
-            //         return responseDTO;
-            //     },
-            // }
-        ),
+            stopAtFirstError: true,
+        }),
     );
 
     // wrap AppModule with useContainer (for custom decorators)
@@ -64,6 +48,14 @@ async function bootstrap() {
 
     // Define global base path
     app.setGlobalPrefix('api');
+
+    const corsOptions: CorsOptions = {
+        origin: 'http://localhost:3001', // Replace with your Vue.js frontend URL
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+    };
+
+    app.enableCors(corsOptions);
 
     // Listen server
     await app.listen(process.env.PORT || 3000);

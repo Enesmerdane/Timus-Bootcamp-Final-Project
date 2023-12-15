@@ -109,6 +109,8 @@ export class FactoryService {
 
         queryText += `WHERE id='${factoryDetail.id}'`;
 
+        //console.log(queryText);
+
         await this.pgConn.query(queryText);
     }
 
@@ -156,6 +158,8 @@ export class FactoryService {
         });
 
         queryText += `WHERE id='${factoryInformation.id}'`;
+
+        //console.log(queryText);
 
         await this.pgConn.query(queryText);
     }

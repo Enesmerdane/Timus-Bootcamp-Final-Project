@@ -28,4 +28,6 @@ export class ApiError extends Error {
  * 6 --> back credentials
  *
  * 7 --> column name already exists
+ *
+ * 8 --> refresh token expired
  */

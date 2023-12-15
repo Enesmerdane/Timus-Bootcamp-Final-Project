@@ -8,6 +8,7 @@ import {
     UseGuards,
     Request,
     UseFilters,
+    Req,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; // for encrypting the password
 
@@ -76,24 +77,27 @@ export class AuthController {
         @Res({ passthrough: true }) response,
     ) {
         try {
-            const { token, refreshToken } = await this.authService.loginUser(
-                loginDTO.email,
-                loginDTO.password,
-            );
+            const { token, refreshToken, userName, userId } =
+                await this.authService.loginUser(
+                    loginDTO.email,
+                    loginDTO.password,
+                );
 
             response
                 .cookie('x-access-token', token)
-                .cookie('x-refresh-token', refreshToken)
+                //.cookie('x-refresh-token', refreshToken)
                 .json(
                     new ResponseDTO(
                         true,
                         200,
-                        { token, refreshToken },
+                        { refreshToken, userName, userId },
                         0,
                         'Login successful',
                     ),
                 );
         } catch (error) {
+            //console.log(error);
+
             const apiError = handleError(error);
 
             response.status(apiError.statusCode).json(apiError);
@@ -107,14 +111,35 @@ export class AuthController {
     }
 
     @Post('renewtoken')
-    async renewAccessToken(@Body() body: RenewTokenDTO) {
+    async renewAccessToken(@Body() body: RenewTokenDTO, @Res() response) {
         try {
             const refreshToken = body.refreshToken;
             const { sub: id, email } = validateRefreshToken(refreshToken);
 
             const accessToken = generateAuthToken(id, email);
 
-            return { accessToken, refreshToken };
+            //return { accessToken, refreshToken };
+            response.cookie('x-access-token', accessToken).send();
+        } catch (error) {
+            console.log(error);
+
+            const apiError = handleError(error);
+
+            response
+                .status(apiError.statusCode)
+                .json(
+                    new ResponseDTO(false, 500, {}, -1, 'Something happened'),
+                );
+        }
+    }
+
+    @Post('logout')
+    @HttpCode(200)
+    async logout(@Req() request, @Res() response) {
+        try {
+            response
+                .clearCookie('x-access-token')
+                .json(new ResponseDTO(true, 200, {}, 0, 'Logout successful'));
         } catch (error) {
             const apiError = handleError(error);
 
