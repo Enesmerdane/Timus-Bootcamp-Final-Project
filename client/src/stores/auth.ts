@@ -45,6 +45,10 @@ export const useAuthStore = defineStore('counter', {
             } catch (error) {
                 console.log(error)
             }
+        },
+        accessCookies(){
+            console.log();
+            
         }
     }
 })

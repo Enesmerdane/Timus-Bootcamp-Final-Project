@@ -110,14 +110,15 @@ export class AuthController {
     }
 
     @Post('renewtoken')
-    async renewAccessToken(@Body() body: RenewTokenDTO) {
+    async renewAccessToken(@Body() body: RenewTokenDTO, @Res() response) {
         try {
             const refreshToken = body.refreshToken;
             const { sub: id, email } = validateRefreshToken(refreshToken);
 
             const accessToken = generateAuthToken(id, email);
 
-            return { accessToken, refreshToken };
+            //return { accessToken, refreshToken };
+            response.cookies('x-refresh-token', refreshToken).send();
         } catch (error) {
             const apiError = handleError(error);
 

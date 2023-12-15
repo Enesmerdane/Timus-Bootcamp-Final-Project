@@ -6,6 +6,7 @@ import {
     registerDecorator,
 } from 'class-validator';
 import * as jwt from 'jsonwebtoken';
+import { ApiError } from 'src/apiError/apiError';
 
 require('dotenv').config();
 
@@ -28,7 +29,8 @@ export function generateRefreshToken(userId, email): String {
 export function validateRefreshToken(token: string): any {
     return jwt.verify(token, process.env.DB_SECRET_REFRESH, (err, payload) => {
         if (err) {
-            throw Error('Not valid refresh token');
+            //throw Error('Not valid refresh token');
+            throw new ApiError(8, 'Refresh token expired.', 401);
         }
 
         return payload;
