@@ -8,6 +8,7 @@ import {
     UseGuards,
     Request,
     UseFilters,
+    Req,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; // for encrypting the password
 
@@ -119,6 +120,20 @@ export class AuthController {
 
             //return { accessToken, refreshToken };
             response.cookies('x-refresh-token', refreshToken).send();
+        } catch (error) {
+            const apiError = handleError(error);
+
+            response.status(apiError.statusCode).json(apiError);
+        }
+    }
+
+    @Post('logout')
+    async logout(@Req() request, @Res() response) {
+        try {
+            response
+                .clearCookie('x-access-token')
+                .clearCookie('x-refresh-token')
+                .json(new ResponseDTO(true, 200, {}, 0, 'Logout successful'));
         } catch (error) {
             const apiError = handleError(error);
 
