@@ -1,6 +1,7 @@
 
 <template>
   <RouterView />
+  <button @click="action">Action</button>
   Hello world
 </template>
 
@@ -12,12 +13,18 @@ export default {
     created: () => {
         const authStore = useAuthStore()
 
-        authStore.login('enes2@gmail.com', '12312312')
+        //authStore.login('enes2@gmail.com', '12312312')
         //authStore.register('test2@gmail.com', 'Aa111111', 'testtesta', 0)
         //console.log();
 
         
     },
+    methods: {
+      action(){
+        const authStore = useAuthStore()
+        authStore.logout()
+      }
+    }
 }
 
 </script>

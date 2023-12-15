@@ -85,12 +85,12 @@ export class AuthController {
 
             response
                 .cookie('x-access-token', token)
-                .cookie('x-refresh-token', refreshToken)
+                //.cookie('x-refresh-token', refreshToken)
                 .json(
                     new ResponseDTO(
                         true,
                         200,
-                        { token, refreshToken, userName },
+                        { refreshToken, userName },
                         0,
                         'Login successful',
                     ),
@@ -119,7 +119,7 @@ export class AuthController {
             const accessToken = generateAuthToken(id, email);
 
             //return { accessToken, refreshToken };
-            response.cookies('x-refresh-token', refreshToken).send();
+            response.cookies('x-access-token', accessToken).send();
         } catch (error) {
             const apiError = handleError(error);
 
@@ -128,6 +128,7 @@ export class AuthController {
     }
 
     @Post('logout')
+    @HttpCode(200)
     async logout(@Req() request, @Res() response) {
         try {
             response
