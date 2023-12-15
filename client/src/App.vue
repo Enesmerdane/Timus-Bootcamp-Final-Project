@@ -33,8 +33,8 @@ export default {
         const authStore = useAuthStore()
         //authStore.renewToken()
         const factoryStore = useFactoryStore()
-        //factoryStore.loadFactoryList(1)
-        factoryStore.loadFactoryDetailsList("722e4577-8a79-4ef1-a004-94ec891bea82", 2)
+        factoryStore.loadFactoryList(1)
+        //factoryStore.loadFactoryDetailsList("722e4577-8a79-4ef1-a004-94ec891bea82", 2)
       },
       action3(details){
         const authStore = useAuthStore()
@@ -66,7 +66,7 @@ export default {
 
         //factoryStore.addColumnFactoryTable('newColumn1', 'text')
         //factoryStore.addColumnFactoryDetailsTable('newColumn1', 'text')
-        factoryStore.deleteColumnFactoryDetailsTable('newcolumn1')
+        factoryStore.deleteColumnFactoryTable('newcolumn1')
       }
     }
 }
