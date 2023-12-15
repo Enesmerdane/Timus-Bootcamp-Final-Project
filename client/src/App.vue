@@ -65,7 +65,8 @@ export default {
         // })
 
         //factoryStore.addColumnFactoryTable('newColumn1', 'text')
-        factoryStore.addColumnFactoryDetailsTable('newColumn1', 'text')
+        //factoryStore.addColumnFactoryDetailsTable('newColumn1', 'text')
+        factoryStore.deleteColumnFactoryDetailsTable('newcolumn1')
       }
     }
 }
