@@ -50,7 +50,7 @@ export class FactoryController {
                     true,
                     200,
                     result.data.rows,
-                    -1,
+                    0,
                     'Factory list successfully retrieved.',
                 ),
             );
