@@ -9,7 +9,7 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
-import { useFactoryListStore } from './stores/factoryList'
+import { useFactoryStore } from './stores/factory'
 
 export default {
     created: () => {
@@ -31,8 +31,9 @@ export default {
       action2(){
         const authStore = useAuthStore()
         //authStore.renewToken()
-        const factoryStore = useFactoryListStore()
-        factoryStore.loadFactoryList(1)
+        const factoryStore = useFactoryStore()
+        //factoryStore.loadFactoryList(1)
+        factoryStore.loadFactoryDetailsList("722e4577-8a79-4ef1-a004-94ec891bea82", 1)
       }
     }
 }
