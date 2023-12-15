@@ -62,6 +62,7 @@ export class AuthService {
         }
 
         const userName = emailExistsResult.hits.hits[0]._source.username;
+        const userId = emailExistsResult.hits.hits[0]._id;
 
         if (
             await bcrypt.compare(
@@ -79,7 +80,7 @@ export class AuthService {
                 email,
             );
 
-            return { token, refreshToken, userName };
+            return { token, refreshToken, userName, userId };
         } else {
             throw new ApiError(6, 'Bad credentials', 400);
         }

@@ -77,7 +77,7 @@ export class AuthController {
         @Res({ passthrough: true }) response,
     ) {
         try {
-            const { token, refreshToken, userName } =
+            const { token, refreshToken, userName, userId } =
                 await this.authService.loginUser(
                     loginDTO.email,
                     loginDTO.password,
@@ -90,7 +90,7 @@ export class AuthController {
                     new ResponseDTO(
                         true,
                         200,
-                        { refreshToken, userName },
+                        { refreshToken, userName, userId },
                         0,
                         'Login successful',
                     ),
@@ -133,7 +133,6 @@ export class AuthController {
         try {
             response
                 .clearCookie('x-access-token')
-                .clearCookie('x-refresh-token')
                 .json(new ResponseDTO(true, 200, {}, 0, 'Logout successful'));
         } catch (error) {
             const apiError = handleError(error);

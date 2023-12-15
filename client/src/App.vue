@@ -22,7 +22,8 @@ export default {
     methods: {
       action(){
         const authStore = useAuthStore()
-        authStore.logout()
+        //authStore.logout()
+        authStore.login('enes2@gmail.com', '12312312')
       }
     }
 }

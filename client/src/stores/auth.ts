@@ -22,9 +22,11 @@ export const useAuthStore = defineStore('counter', {
                         'Content-Type': 'application/json'
                     }
                 })
-
                 this.$state.refreshToken = result.data.payload.refreshToken
+                this.$state.userName = result.data.payload.userName
+                this.$state.userId = result.data.userId
                 console.log(result)
+                console.log(this.$state)
             } catch (error) {
                 console.log(error)
             }
@@ -45,6 +47,7 @@ export const useAuthStore = defineStore('counter', {
                     }
                 })
                 console.log(result)
+                console.log(this.$state)
             } catch (error) {
                 console.log(error)
             }
@@ -60,6 +63,7 @@ export const useAuthStore = defineStore('counter', {
                     }
                 })
                 console.log(res)
+                console.log(this.$state)
             } catch (error) {
                 console.log(error)
             }
