@@ -2,6 +2,7 @@
 <template>
   <RouterView />
   <button @click="action">Action</button>
+  <button @click="action2">Action2</button>
   Hello world
 </template>
 
@@ -24,6 +25,11 @@ export default {
         const authStore = useAuthStore()
         //authStore.logout()
         authStore.login('enes2@gmail.com', '12312312')
+        //authStore.renewToken()
+      },
+      action2(){
+        const authStore = useAuthStore()
+        authStore.renewToken()
       }
     }
 }

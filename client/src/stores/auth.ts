@@ -22,9 +22,9 @@ export const useAuthStore = defineStore('counter', {
                         'Content-Type': 'application/json'
                     }
                 })
-                this.$state.refreshToken = result.data.payload.refreshToken
-                this.$state.userName = result.data.payload.userName
-                this.$state.userId = result.data.userId
+                this.refreshToken = result.data.payload.refreshToken
+                this.userName = result.data.payload.userName
+                this.userId = result.data.payload.userId
                 console.log(result)
                 console.log(this.$state)
             } catch (error) {
@@ -62,6 +62,27 @@ export const useAuthStore = defineStore('counter', {
                         'Content-Type': 'application/json'
                     }
                 })
+                console.log(res)
+                console.log(this.$state)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async renewToken() {
+            try {
+                console.log(this.refreshToken)
+
+                const res = await axios({
+                    method: 'post',
+                    url: 'api/auth/renewtoken',
+                    data: JSON.stringify({
+                        refreshToken: this.refreshToken
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
                 console.log(res)
                 console.log(this.$state)
             } catch (error) {

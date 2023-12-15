@@ -119,11 +119,17 @@ export class AuthController {
             const accessToken = generateAuthToken(id, email);
 
             //return { accessToken, refreshToken };
-            response.cookies('x-access-token', accessToken).send();
+            response.cookie('x-access-token', accessToken).send();
         } catch (error) {
+            console.log(error);
+
             const apiError = handleError(error);
 
-            response.status(apiError.statusCode).json(apiError);
+            response
+                .status(apiError.statusCode)
+                .json(
+                    new ResponseDTO(false, 500, {}, -1, 'Something happened'),
+                );
         }
     }
 
