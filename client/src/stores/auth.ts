@@ -2,20 +2,20 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useAuthStore = defineStore('counter', {
-    state: () => ({ userId: null }),
+    state: () => ({ userId: null, userName: null }),
     getters: {
-        getUserId: (state) => state.userId
+        getUserId: (state) => state.userId,
+        getUserName: (state) => state.userName
     },
     actions: {
         async login(email: string, password: string) {
             try {
-                //const result = await axios.get('api/auth/login', { email, password })
                 const result = await axios({
                     method: 'post',
                     url: '/api/auth/login',
                     data: JSON.stringify({
-                        email: 'enes2@gmail.com',
-                        password: '12312312'
+                        email,
+                        password
                     }),
                     headers: {
                         'Content-Type': 'application/json'
@@ -25,6 +25,6 @@ export const useAuthStore = defineStore('counter', {
             } catch (error) {
                 console.log(error)
             }
-        }
+        }, //async register(email)
     }
 })

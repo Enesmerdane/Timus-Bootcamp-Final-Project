@@ -76,10 +76,11 @@ export class AuthController {
         @Res({ passthrough: true }) response,
     ) {
         try {
-            const { token, refreshToken } = await this.authService.loginUser(
-                loginDTO.email,
-                loginDTO.password,
-            );
+            const { token, refreshToken, userName } =
+                await this.authService.loginUser(
+                    loginDTO.email,
+                    loginDTO.password,
+                );
 
             response
                 .cookie('x-access-token', token)
@@ -88,7 +89,7 @@ export class AuthController {
                     new ResponseDTO(
                         true,
                         200,
-                        { token, refreshToken },
+                        { token, refreshToken, userName },
                         0,
                         'Login successful',
                     ),

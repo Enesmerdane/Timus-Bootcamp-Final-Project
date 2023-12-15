@@ -12,7 +12,7 @@ export default {
     created: () => {
         const authStore = useAuthStore()
 
-        authStore.login('enes@gmail.com', '12312312')
+        authStore.login('enes2@gmail.com', '12312312')
     }
 }
 
