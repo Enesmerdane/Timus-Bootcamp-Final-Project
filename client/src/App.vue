@@ -11,7 +11,7 @@
 
   <RouterView />
 
-  <ErrorView/>
+  <ErrorView errorCode='123'/>
 </template>
 
 <script lang="ts">

@@ -1,23 +1,19 @@
 <template>
   <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ErrorView">
     Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ErrorView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <div class="modal-content bg-danger error-modal">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            <div class="modal-body">
-                ...
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="modal-body">
+                    {{ errorCode }}
                 </div>
             </div>
         </div>
@@ -26,10 +22,16 @@
 
 <script>
 export default {
-    
+    props: ['errorCode']
 }
 </script>
 
-<style>
+<style scoped>
+    .error-modal {
+        background-color: rgb(214, 73, 73) !important;
+    }
 
+    .modal-header-custom {
+        border-bottom-color: rgb(163, 42, 42) !important;
+    }
 </style>
