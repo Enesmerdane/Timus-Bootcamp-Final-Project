@@ -8,26 +8,28 @@
   <RouterLink to='/login'>Login</RouterLink>
   <RouterLink to='/factorylist'>Factory List</RouterLink>
   <RouterLink to='/factorydetails'>Factory Details</RouterLink>
+  
   <RouterView />
-  <ErrorView/>
+  <button @click="action">Action</button>
+  <button @click="action2">Action2</button>
+  <button @click="action3">Action3</button>
+  Hello world
 </template>
 
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useFactoryStore } from './stores/factory'
-import ErrorView from './components/modals/Error.vue'
 
 export default {
-    components: {
-        ErrorView,
-    },
     created: () => {
         const authStore = useAuthStore()
-        
+
         //authStore.login('enes2@gmail.com', '12312312')
         //authStore.register('test2@gmail.com', 'Aa111111', 'testtesta', 0)
-        //console.log();  
+        //console.log();
+
+        
     },
     methods: {
       action(){
