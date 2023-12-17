@@ -42,7 +42,8 @@ export default {
       action(){
         const authStore = useAuthStore()
         //authStore.logout()
-        authStore.login('enes2@gmail.com', '123123123')
+        authStore.login('enes2@gmail.com', '12312312')
+        
         //authStore.renewToken()
       },
       action2(){
