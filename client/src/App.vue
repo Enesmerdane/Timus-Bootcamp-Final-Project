@@ -10,18 +10,25 @@
   <RouterLink to='/factorydetails'>Factory Details</RouterLink>
   
   <RouterView />
-  <button @click="action">Action</button>
-  <button @click="action2">Action2</button>
-  <button @click="action3">Action3</button>
-  Hello world
+  <ErrorView :errorMessage="pageStore.getErrorMessage" :showModal="pageStore.getShowError"/>
 </template>
 
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useFactoryStore } from './stores/factory'
+import ErrorView from './components/modals/Error.vue'
+import { usePageStore } from './stores/pageState'
 
 export default {
+    components: {
+        ErrorView
+    },
+    setup(){
+        const pageStore = usePageStore()
+
+        return {pageStore}
+    },
     created: () => {
         const authStore = useAuthStore()
 
@@ -33,9 +40,9 @@ export default {
     },
     methods: {
       action(){
-        //const authStore = useAuthStore()
+        const authStore = useAuthStore()
         //authStore.logout()
-        //authStore.login('enes2@gmail.com', '12312312')
+        authStore.login('enes2@gmail.com', '123123123')
         //authStore.renewToken()
       },
       action2(){

@@ -60,18 +60,24 @@ export const useFactoryStore = defineStore('factory', {
                                         this.loadFactoryList(page)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -128,18 +134,24 @@ export const useFactoryStore = defineStore('factory', {
                                         this.loadFactoryDetailsList(factoryId, page)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -191,18 +203,24 @@ export const useFactoryStore = defineStore('factory', {
                                         //this.changeFactoryDetail(factoryDetailId, details)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -254,18 +272,24 @@ export const useFactoryStore = defineStore('factory', {
                                         //this.changeFactoryDetail(factoryDetailId, details)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -320,18 +344,24 @@ export const useFactoryStore = defineStore('factory', {
                                         //this.changeFactoryDetail(factoryDetailId, details)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -386,18 +416,24 @@ export const useFactoryStore = defineStore('factory', {
                                         //this.changeFactoryDetail(factoryDetailId, details)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -449,18 +485,24 @@ export const useFactoryStore = defineStore('factory', {
                                         //this.changeFactoryDetail(factoryDetailId, details)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 // we dont have refreshToken
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -512,18 +554,24 @@ export const useFactoryStore = defineStore('factory', {
                                         //this.changeFactoryDetail(factoryDetailId, details)
                                         pageState.setLoading(false)
                                     })
-                                    .catch((err) => {
+                                    .catch((error: any) => {
                                         // refresh token invalid or expired
+                                        const pageStore = usePageStore()
+                                        pageStore.setShowError(true, error.response.data.errorCode)
                                         authStore.$reset()
                                         pageState.setLoading(false)
                                     })
                             } else {
                                 // we dont have refreshToken
+                                const pageStore = usePageStore()
+                                pageStore.setShowError(true, err.response.data.errorCode)
                                 console.log(err)
                             }
                         }
                     })
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         }

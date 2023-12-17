@@ -26,16 +26,19 @@ export const useAuthStore = defineStore('auth', {
                         'Content-Type': 'application/json'
                     }
                 })
+
+                pageStore.setLoading(false)
+
                 this.refreshToken = result.data.payload.refreshToken
                 this.userName = result.data.payload.userName
                 this.userId = result.data.payload.userId
 
-                pageStore.setLoading(false)
-
                 console.log(result)
                 console.log(this.$state)
-            } catch (error) {
-                console.log(error)
+            } catch (error: any) {
+                console.log('hata aldik: ', error)
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
             }
         },
         async register(email: string, password: string, username: string, role: number) {
@@ -61,7 +64,9 @@ export const useAuthStore = defineStore('auth', {
 
                 console.log(result)
                 console.log(this.$state)
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -83,7 +88,9 @@ export const useAuthStore = defineStore('auth', {
 
                 console.log(res)
                 console.log(this.$state)
-            } catch (error) {
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         },
@@ -102,8 +109,9 @@ export const useAuthStore = defineStore('auth', {
 
                 console.log(res)
                 console.log(this.$state)
-            } catch (error) {
-                this.refreshToken = null
+            } catch (error: any) {
+                const pageStore = usePageStore()
+                pageStore.setShowError(true, error.response.data.errorCode)
                 console.log(error)
             }
         }
