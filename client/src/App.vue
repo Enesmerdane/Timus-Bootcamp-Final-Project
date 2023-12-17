@@ -1,14 +1,18 @@
 
 <template>
-  <button @click="action">Action</button>
+    <div>
+        <span>
+            <img alt="Factory logo" class="logo" src="@/assets/factory-icon.png" width="60" height="60" />
+        </span>
+    </div>
+  <!-- <button @click="action">Action</button>
   <button @click="action2">Action2</button>
   <button @click="action3">Action3</button>
   <br>
   <RouterLink to='/register'>Register</RouterLink>
   <RouterLink to='/login'>Login</RouterLink>
   <RouterLink to='/factorylist'>Factory List</RouterLink>
-  <RouterLink to='/factorydetails'>Factory Details</RouterLink>
-  
+  <RouterLink to='/factorydetails'>Factory Details</RouterLink> -->
   <RouterView />
   <ErrorView :errorMessage="pageStore.getErrorMessage" :showModal="pageStore.getShowError"/>
 </template>
@@ -88,3 +92,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .logo {
+        margin: 20px;
+        position: fixed;
+        left: 5px;
+        top: 5px;
+    }
+</style>
