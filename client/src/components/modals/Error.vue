@@ -1,37 +1,78 @@
 <template>
-  <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ErrorView">
-    Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="ErrorView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-danger error-modal">
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{ errorCode }}
+    <div>
+        <div>
+            <div class="modal">
+                <div class="modal-content">
+                <span class="close" @click="closeModal">&times;</span>
+                <p>This is a modal view. It will disappear after 3 minutes.</p>
                 </div>
             </div>
         </div>
+
+        <button @click="openModal">Trigger Error</button>
     </div>
 </template>
 
 <script>
+import { usePageStore } from '../../stores/pageState'
+
+
+
 export default {
-    props: ['errorCode']
+    data(){
+        return {
+            showErrorView: true
+        }
+    },
+    props: ['errorCode'],
+    beforeCreate(){
+        const pageStore = usePageStore()
+
+        //this.showErrorView = pageStore.getErrorView
+
+    },
+    methods: {
+        toogleErrorView(){
+            this.showErrorView = !this.showErrorView
+        },
+        openModal() {
+            document.getElementById('error-modal-view').style.display = 'block';
+        },
+
+        closeModal() {
+            document.getElementById('error-modal-view').style.display = 'none';
+        }
+    }
 }
 </script>
 
 <style scoped>
-    .error-modal {
-        background-color: rgb(214, 73, 73) !important;
-    }
+    .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-    .modal-header-custom {
-        border-bottom-color: rgb(163, 42, 42) !important;
-    }
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
 </style>
