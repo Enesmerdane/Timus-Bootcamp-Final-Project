@@ -4,11 +4,18 @@ import axios from 'axios'
 import { useAuthStore } from './auth'
 
 export const useFactoryStore = defineStore('factory', {
-    state: () => ({ factoryList: [] as any[], factoryDetailsList: [] as any[] }),
+    state: () => ({
+        factoryList: [] as any[],
+        factoryDetailsList: [] as any[],
+        factoryColumnTypes: [] as any[],
+        factoryDetailsColumnTypes: [] as any[]
+    }),
     persist: true,
     getters: {
         getFactoryList: (state) => state.factoryList,
-        getFactoryDetails: (state) => state.factoryDetailsList
+        getFactoryDetails: (state) => state.factoryDetailsList,
+        getFactoryTableColumnTypes: (state) => state.factoryColumnTypes,
+        getFactoryDetailsTableColumnTypes: (state) => state.factoryDetailsColumnTypes
     },
     actions: {
         async loadFactoryList(page: number) {
@@ -26,17 +33,27 @@ export const useFactoryStore = defineStore('factory', {
                         'Content-Type': 'application/json'
                     }
                 })
-                    .then((res) => {
+                    .then(async (res) => {
                         //console.log('data: ', res)
 
                         this.factoryList = res.data.payload
 
-                        console.log(res.data.payload)
+                        //console.log(res.data.payload)
+
+                        const result = await axios({
+                            method: 'get',
+                            url: '/api/factorytablecolumns'
+                        })
+
+                        //console.log(result)
+
+                        this.factoryColumnTypes = result.data.payload.rows
 
                         pageState.setLoading(false)
                     })
                     .catch((err) => {
                         // it because authGuard exceptions are not handled in backend
+                        console.log(err)
 
                         // refresh access token if any
                         if (err.response.data.statusCode === 401) {
@@ -98,12 +115,20 @@ export const useFactoryStore = defineStore('factory', {
                         'Content-Type': 'application/json'
                     }
                 })
-                    .then((res) => {
+                    .then(async (res) => {
                         //console.log(res.data.payload)
 
                         this.factoryDetailsList = res.data.payload
 
-                        console.log('state: ', this.getFactoryDetails)
+                        //console.log('state: ', this.getFactoryDetails)
+                        const result = await axios({
+                            method: 'get',
+                            url: '/api/factorytablecolumns'
+                        })
+
+                        //console.log(result)
+
+                        this.factoryColumnTypes = result.data.payload.rows
 
                         pageState.setLoading(false)
                     })

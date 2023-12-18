@@ -229,4 +229,24 @@ export class FactoryService {
             DROP ${name}
         `);
     }
+
+    async getFactoryTableColumnTypes() {
+        return await this.pgConn.query(`
+            SELECT 
+            COLUMN_NAME, 
+            DATA_TYPE 
+            FROM INFORMATION_SCHEMA.COLUMNS
+            where TABLE_NAME = 'factory' 
+        `);
+    }
+
+    async getFactoryDetailsTableColumnTypes() {
+        return await this.pgConn.query(`
+            SELECT 
+            COLUMN_NAME, 
+            DATA_TYPE 
+            FROM INFORMATION_SCHEMA.COLUMNS
+            where TABLE_NAME = 'factory_details' 
+        `);
+    }
 }

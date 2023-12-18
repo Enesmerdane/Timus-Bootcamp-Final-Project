@@ -255,4 +255,34 @@ export class FactoryController {
             response.status(apiError.statusCode).json(apiError);
         }
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('factorytablecolumns')
+    async getFactoryTableColumnTypes(@Res() response) {
+        try {
+            const result =
+                await this.factoryService.getFactoryTableColumnTypes();
+            //console.log(result);
+
+            response.send(new ResponseDTO(true, 200, result));
+        } catch (error) {
+            const apiError = handleError(error);
+            response.status(apiError.statusCode).json(apiError);
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('factorydetailstablecolumns')
+    async getFactoryDetailsTableColumnTypes(@Res() response) {
+        try {
+            const result =
+                await this.factoryService.getFactoryDetailsTableColumnTypes();
+            //console.log(result);
+
+            response.send(new ResponseDTO(true, 200, result));
+        } catch (error) {
+            const apiError = handleError(error);
+            response.status(apiError.statusCode).json(apiError);
+        }
+    }
 }

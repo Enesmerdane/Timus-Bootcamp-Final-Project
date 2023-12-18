@@ -3,6 +3,7 @@
     <div>
         <div class="navbar" v-if="true">
             <img alt="Factory logo" class="navbar-logo" src="@/assets/factory-icon.png" width="60" height="60" />
+            <div class="navbar-username">{{authStore.getUsername}}</div>
         </div>
         <span v-if="false">
             <img alt="Factory logo" class="logo" src="@/assets/factory-icon.png" width="60" height="60" />
@@ -36,8 +37,8 @@ export default {
     },
     setup(){
         const pageStore = usePageStore()
-
-        return { pageStore }
+        const authStore = useAuthStore()
+        return { pageStore, authStore }
     },
     created: () => {
         const authStore = useAuthStore()
@@ -110,9 +111,17 @@ export default {
     left: 0px;
     width: 100%;
     background-color: rgb(5, 129, 11);
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navbar-logo{
     margin: 10px
+}
+
+.navbar-username{
+    margin-right: 20px;
+    font-size: 20px;
 }
 </style>

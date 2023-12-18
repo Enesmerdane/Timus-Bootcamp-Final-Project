@@ -7,13 +7,10 @@ export const useAuthStore = defineStore('auth', {
     persist: true,
     getters: {
         getUserId: (state) => state.userId,
-        getUserName: (state) => state.userName,
+        getUsername: (state) => state.userName,
         getRefreshToken: (state) => state.refreshToken
     },
     actions: {
-        saveChangesToLocalStorage(){
-
-        },
         async login(email: string, password: string) {
             try {
                 const pageStore = usePageStore()
