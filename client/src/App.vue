@@ -15,23 +15,26 @@
   <RouterLink to='/factorydetails'>Factory Details</RouterLink> -->
   <RouterView />
   <ErrorView :errorMessage="pageStore.getErrorMessage" :showModal="pageStore.getShowError"/>
+  <LoadingView v-if="pageStore.getLoading"/>
 </template>
 
-<script lang="ts">
+<script>
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useFactoryStore } from './stores/factory'
 import ErrorView from './components/modals/Error.vue'
 import { usePageStore } from './stores/pageState'
+import LoadingView from './components/Loading.vue'
 
 export default {
     components: {
-        ErrorView
+        ErrorView,
+        LoadingView
     },
     setup(){
         const pageStore = usePageStore()
 
-        return {pageStore}
+        return { pageStore }
     },
     created: () => {
         const authStore = useAuthStore()
@@ -39,8 +42,6 @@ export default {
         //authStore.login('enes2@gmail.com', '12312312')
         //authStore.register('test2@gmail.com', 'Aa111111', 'testtesta', 0)
         //console.log();
-
-        
     },
     methods: {
       action(){

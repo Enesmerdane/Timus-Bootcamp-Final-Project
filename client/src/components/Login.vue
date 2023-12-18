@@ -46,6 +46,7 @@ import { RouterLink } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 import { object, string } from 'yup';
+import { usePageStore } from '../stores/pageState';
 
 let loginSchema = object().shape({
   email_input: string().email().required(),
@@ -83,6 +84,8 @@ export default {
             });
         },
         handleLogin(){
+            const pageStore = usePageStore()
+            pageStore.setLoading(true)
             loginSchema
                 .validate(this.values, { abortEarly: false })
                 .then(()=>{
@@ -96,9 +99,11 @@ export default {
                             password_input: ""
                         }
                         this.$router.push('/factorylist')
+                        pageStore.setLoading(false)
                     })
                 })
                 .catch(err => {
+                    pageStore.setLoading(false)
                     err.inner.forEach(error=> {
                         this.errors[error.path] = error.message
                     })
