@@ -41,6 +41,10 @@ const router = createRouter({
                     component: FactoryDetailsUpdateView
                 }
             ]
+        },
+        {
+            path: '/',
+            redirect: '/factorylist'
         }
     ]
 })

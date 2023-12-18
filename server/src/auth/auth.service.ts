@@ -8,6 +8,19 @@ import { ApiError } from 'src/apiError/apiError';
 export class AuthService {
     constructor(@Inject('ELASTICSEARCH_CONNECTION') private elasticConn: any) {}
 
+    async getUsername(userId: string) {
+        const result = await this.elasticConn.search({
+            index: 'users_auth',
+            query: {
+                match_phrase: {
+                    _id: userId,
+                },
+            },
+        });
+
+        return result.hits.total.value;
+    }
+
     async createUser(payload: User) {
         // Check whether a user with given username exists
         const usernameExistsResult = await this.elasticConn.search({

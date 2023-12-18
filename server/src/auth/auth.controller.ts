@@ -118,8 +118,12 @@ export class AuthController {
 
             const accessToken = generateAuthToken(id, email);
 
+            const username = await this.authService.getUsername(id);
+
             //return { accessToken, refreshToken };
-            response.cookie('x-access-token', accessToken).send();
+            response
+                .cookie('x-access-token', accessToken)
+                .send({ user_id: id, username });
         } catch (error) {
             console.log(error);
 

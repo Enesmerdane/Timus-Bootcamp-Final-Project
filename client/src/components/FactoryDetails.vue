@@ -7,6 +7,7 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { usePageStore } from '../stores/pageState'
 
 export default {
     beforeRouteEnter(to, from){
@@ -14,6 +15,9 @@ export default {
         if(!authStore.getUserId){
             return '/login'
         }
+
+        const pageStore = usePageStore()
+        pageStore.setShowError(false)
     },
     methods: {
         navigateEdit: function(){

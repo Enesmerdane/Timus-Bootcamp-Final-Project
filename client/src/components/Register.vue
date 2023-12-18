@@ -122,6 +122,9 @@ export default {
         if(authStore.getUserId){
             return '/factorylist'
         }
+
+        const pageStore = usePageStore()
+        pageStore.setShowError(false)
     },
     methods:{
         validate(field) {

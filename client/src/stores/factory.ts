@@ -5,6 +5,7 @@ import { useAuthStore } from './auth'
 
 export const useFactoryStore = defineStore('factory', {
     state: () => ({ factoryList: [] as any[], factoryDetailsList: [] as any[] }),
+    persist: true,
     getters: {
         getFactoryList: (state) => state.factoryList,
         getFactoryDetails: (state) => state.factoryDetailsList

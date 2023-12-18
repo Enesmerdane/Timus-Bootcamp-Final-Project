@@ -1,7 +1,10 @@
 
 <template>
     <div>
-        <span>
+        <div class="navbar" v-if="true">
+            <img alt="Factory logo" class="navbar-logo" src="@/assets/factory-icon.png" width="60" height="60" />
+        </div>
+        <span v-if="false">
             <img alt="Factory logo" class="logo" src="@/assets/factory-icon.png" width="60" height="60" />
         </span>
     </div>
@@ -95,10 +98,21 @@ export default {
 </script>
 
 <style scoped>
-    .logo {
-        margin: 20px;
-        position: fixed;
-        left: 5px;
-        top: 5px;
-    }
+.logo {
+    margin: 20px;
+    position: fixed;
+    left: 5px;
+    top: 5px;
+}
+.navbar{
+    position: fixed;
+    top:0px;
+    left: 0px;
+    width: 100%;
+    background-color: rgb(5, 129, 11);
+}
+
+.navbar-logo{
+    margin: 10px
+}
 </style>

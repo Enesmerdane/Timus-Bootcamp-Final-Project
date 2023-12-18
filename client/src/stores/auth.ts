@@ -4,12 +4,16 @@ import { usePageStore } from './pageState'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({ userId: null, userName: null, refreshToken: null }),
+    persist: true,
     getters: {
         getUserId: (state) => state.userId,
         getUserName: (state) => state.userName,
         getRefreshToken: (state) => state.refreshToken
     },
     actions: {
+        saveChangesToLocalStorage(){
+
+        },
         async login(email: string, password: string) {
             try {
                 const pageStore = usePageStore()
@@ -100,6 +104,8 @@ export const useAuthStore = defineStore('auth', {
         },
         async renewToken() {
             try {
+                console.log(this.refreshToken)
+
                 const res = await axios({
                     method: 'post',
                     url: 'api/auth/renewtoken',

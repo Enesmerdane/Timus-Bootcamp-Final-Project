@@ -70,7 +70,12 @@ export default {
         const authStore = useAuthStore()
         if(authStore.getUserId){
             return '/factorylist'
+        } else {
+            authStore.renewToken()
         }
+
+        const pageStore = usePageStore()
+        pageStore.setShowError(false)
     },
     methods:{
         validate(field) {

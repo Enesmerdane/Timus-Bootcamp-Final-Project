@@ -6,6 +6,7 @@ export const usePageStore = defineStore('pageState', {
         showError: false,
         errorMessage: ''
     }),
+    persist: true,
     getters: {
         getLoading: (state) => state.loading,
         getShowError: (state) => state.showError,
@@ -19,8 +20,6 @@ export const usePageStore = defineStore('pageState', {
             if (val && message) {
                 this.showError = val
                 this.errorMessage = message
-            } else {
-                this.showError = val
             }
             this.showError = val
         }
