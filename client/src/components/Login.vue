@@ -16,9 +16,9 @@
             <span class="highlight"></span>
             <span class="bar"></span>
             <!-- <label>Email</label> -->
-            <div class="input-error" v-if="!!errors.email_input">{{errors.email_input}}</div>
+            
         </div>
-
+        <div class="input-error" v-if="!!errors.email_input">{{errors.email_input}}</div>
         <div class="group">      
             <input id="password_input"
                 name="password_input"
@@ -31,9 +31,9 @@
             <span class="highlight"></span>
             <span class="bar"></span>
             <!-- <label>Password</label> -->
-            <div class="input-error" v-if="!!errors.password_input">{{errors.password_input}}</div>
+            
         </div>
-
+        <div class="input-error" v-if="!!errors.password_input">{{errors.password_input}}</div>
         <button class="login_button" @click="handleLogin">Login</button>
         <div>
             Don't have any account? <router-link to='/register'>Register</router-link>
@@ -61,8 +61,8 @@ export default {
                 password_input: "",
             },
             errors: {
-                email_input_error: "",
-                password_input_error: "" 
+                email_input: "",
+                password_input: "" 
             }
         }
     },
@@ -99,6 +99,9 @@ export default {
                             password_input: ""
                         }
                         this.$router.push('/factorylist')
+                        pageStore.setLoading(false)
+                    }).catch(error=> {
+                        pageStore.setShowError(true, error.response.data.errorCode)
                         pageStore.setLoading(false)
                     })
                 })
@@ -141,7 +144,7 @@ export default {
 }
 
 .login-modal-title {
-    margin-top: 30px;
+    margin-top: 0px;
     margin-bottom: 10px;
     font-size: 4rem;
 }
@@ -226,10 +229,15 @@ export default {
   box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
 
+.input-error {
+    color:rgb(178, 0, 0);
+    margin-top:0px;
+    margin-bottom: 5px
+}
 .group 			  { 
   position:relative; 
   margin-bottom:10px;
-  margin-top: 25px
+  margin-top: 5px
 }
 input 				{
   font-size:18px;
@@ -320,9 +328,5 @@ input:focus ~ .highlight {
 }
 
 /** XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
-.input-error {
-    color:rgb(178, 0, 0);
-    margin-top:5px;
-}
 
 </style>

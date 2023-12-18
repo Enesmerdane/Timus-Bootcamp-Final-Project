@@ -42,57 +42,61 @@ export const useAuthStore = defineStore('auth', {
             }
         },
         async register(email: string, password: string, username: string, role: number) {
-            try {
-                const pageStore = usePageStore()
-                pageStore.setLoading(true)
+            // try {
+            const pageStore = usePageStore()
+            pageStore.setLoading(true)
 
-                const result = await axios({
-                    method: 'post',
-                    url: '/api/auth/register',
-                    data: JSON.stringify({
-                        email,
-                        password,
-                        username,
-                        role
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
+            const result = await axios({
+                method: 'post',
+                url: '/api/auth/register',
+                data: JSON.stringify({
+                    email,
+                    password,
+                    username,
+                    role
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            pageStore.setLoading(false)
+            console.log('successful')
 
-                pageStore.setLoading(true)
+            return result
 
-                console.log(result)
-                console.log(this.$state)
-            } catch (error: any) {
-                const pageStore = usePageStore()
-                pageStore.setShowError(true, error.response.data.errorCode)
-                console.log(error)
-            }
+            //pageStore.setLoading(true)
+
+            // console.log(result)
+            // console.log(this.$state)
+            // } catch (error: any) {
+            //     const pageStore = usePageStore()
+            //     pageStore.setShowError(true, error.response.data.errorCode)
+            //     console.log(error)
+            // }
         },
         async logout() {
-            try {
-                const pageStore = usePageStore()
-                pageStore.setLoading(true)
+            // try {
+            const pageStore = usePageStore()
+            pageStore.setLoading(true)
 
-                this.refreshToken = null
-                const res = await axios({
-                    method: 'post',
-                    url: '/api/auth/logout',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
+            this.refreshToken = null
+            const res = await axios({
+                method: 'post',
+                url: '/api/auth/logout',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
 
-                pageStore.setLoading(true)
+            pageStore.setLoading(true)
 
-                console.log(res)
-                console.log(this.$state)
-            } catch (error: any) {
-                const pageStore = usePageStore()
-                pageStore.setShowError(true, error.response.data.errorCode)
-                console.log(error)
-            }
+            console.log(res)
+            console.log(this.$state)
+            // } catch (error: any) {
+            //     const pageStore = usePageStore()
+            //     pageStore.setShowError(true, error.response.data.errorCode)
+            //     console.log(error)
+            // }
         },
         async renewToken() {
             try {

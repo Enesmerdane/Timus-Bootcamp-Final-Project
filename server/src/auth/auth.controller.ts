@@ -53,7 +53,7 @@ export class AuthController {
                     responseDTO.result = true;
                     responseDTO.statusCode = 201;
                     responseDTO.payload = {};
-                    return responseDTO;
+                    response.send(responseDTO);
                 } else {
                     throw new ApiError(
                         4,
