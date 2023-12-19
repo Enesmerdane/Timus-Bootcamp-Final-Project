@@ -25,7 +25,7 @@ export class ApiError extends Error {
  * 5 --> error on input fields
  *
  * LOGIN
- * 6 --> back credentials
+ * 6 --> bad credentials
  *
  * 7 --> column name already exists
  *

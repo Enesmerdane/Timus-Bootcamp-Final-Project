@@ -143,7 +143,7 @@ export class FactoryController {
         @Res() response,
     ) {
         try {
-            //console.log(addFactoryTableColumnDTO);
+            console.log(addFactoryTableColumnDTO);
 
             const columnOptions = addFactoryTableColumnDTO.column_options;
 

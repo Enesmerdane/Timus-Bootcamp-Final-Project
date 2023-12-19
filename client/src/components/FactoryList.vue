@@ -20,6 +20,7 @@
     </div> -->
     <h1 class="page-title">Factory List</h1>
     <button class="remove_button" @click="handleRemoveButton">{{setRemoveButtonText}}</button>
+    <button class="remove_button" @click="handleAddColumnAction">Add column</button>
     <div class="table-wrapper">
         <table class="fl-table">
             <thead>
@@ -39,6 +40,9 @@
                 <tr v-for="row in factoryStore.getFactoryList" :key="row.id">
                     <!-- {{row[index]}} -->
                     <td v-for="keyVal in getPropsForColumns()" :key="keyVal">{{row[keyVal] || '-'}}</td>
+                    <td>
+                        <button @click="()=>{handleEdit(row.id)}">Edit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -51,7 +55,6 @@
             </div>
         </div>
     </div>
-    <router-view></router-view>
 </template>
 
 <script>
@@ -67,7 +70,7 @@ export default {
         }
     },
     created(){
-        console.log(this.factoryStore.getFactoryTableColumnTypes);
+        //console.log(this.factoryStore.getFactoryTableColumnTypes);
     },
     beforeRouteEnter(to, from){
         const authStore = useAuthStore()
@@ -84,6 +87,15 @@ export default {
         }
     },
     methods: {
+        handleEdit(id){
+            this.$router.push({
+                name: 'factorylistedit',
+                params: { factory_id: id}
+            })
+        },
+        handleAddColumnAction(){
+            this.$router.push('factorylist/addcolumn')
+        },
         handleRemoveAction(columnName){
             const factoryStore = useFactoryStore()
             const pageStore = usePageStore()
@@ -96,7 +108,7 @@ export default {
             this.removingColumn = ! this.removingColumn;
         },
         getPropsForColumns(){
-            console.log(Object.keys(this.factoryStore.getFactoryList[0]).filter((val)=> val !== 'id'));
+            //console.log(Object.keys(this.factoryStore.getFactoryList[0]).filter((val)=> val !== 'id'));
             return Object.keys(this.factoryStore.getFactoryList[0]).filter((val)=> val !== 'id')
         },
         navigateEdit(){
@@ -136,7 +148,7 @@ export default {
     watch: {
     '$route.query': {
         handler(newValue) {
-            console.log(newValue);
+            //console.log(newValue);
    
             this.factoryStore.loadFactoryList(Number(newValue.page))
         },
@@ -233,6 +245,7 @@ xxxxx
   vertical-align: middle;
   white-space: nowrap;
   width: 150px;
+  margin-right: 10px;
 }
 
 .remove_button:focus:not(:focus-visible):not(.focus-visible) {

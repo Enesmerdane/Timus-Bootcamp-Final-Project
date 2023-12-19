@@ -6,6 +6,9 @@ import FactoryTableView from '../components/FactoryList.vue'
 import FactoryDetailsView from '../components/FactoryDetails.vue'
 import FactoryInformationUpdateView from '../components/FactoryInformationUpdate.vue'
 import FactoryDetailsUpdateView from '../components/FactoryDetailsUpdate.vue'
+import FactoryInformationAddColumnModal from '../components/modals/FactoryInformationAddColumnModal.vue'
+import FactoryListLayout from '../layouts/FactoryListLayout.vue'
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,11 +26,21 @@ const router = createRouter({
         {
             path: '/factorylist',
             name: 'factory_list_page',
-            component: FactoryTableView,
+            component: FactoryListLayout,
             children: [
                 {
+                    path: '',
+                    component: FactoryTableView,
+                    name: 'factorylisttableview'
+                },
+                {
                     path: 'edit/:factory_id',
-                    component: FactoryInformationUpdateView
+                    component: FactoryInformationUpdateView,
+                    name: 'factorylistedit'
+                },
+                {
+                    path: 'addcolumn',
+                    component: FactoryInformationAddColumnModal
                 }
             ]
         },

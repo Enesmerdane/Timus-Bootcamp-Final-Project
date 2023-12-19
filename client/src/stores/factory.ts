@@ -23,11 +23,13 @@ export const useFactoryStore = defineStore('factory', {
                 const pageState = usePageStore()
                 pageState.setLoading(true)
 
+                const pageNum = page ? Number(page) : 1
+
                 axios({
                     method: 'get',
                     url: '/api/factory',
                     params: {
-                        page
+                        page: pageNum
                     },
                     headers: {
                         'Content-Type': 'application/json'
@@ -53,7 +55,7 @@ export const useFactoryStore = defineStore('factory', {
                     })
                     .catch((err) => {
                         // it because authGuard exceptions are not handled in backend
-                        console.log(err)
+                        //console.log(err)
 
                         // refresh access token if any
                         if (err.response.data.statusCode === 401) {
@@ -324,6 +326,9 @@ export const useFactoryStore = defineStore('factory', {
             try {
                 const pageState = usePageStore()
                 pageState.setLoading(true)
+                console.log('hey')
+                console.log('column:', columnName)
+                console.log(columnType)
 
                 axios({
                     method: 'put',

@@ -1,7 +1,7 @@
 <template>
   <div class="login-modal-view">
         <div class="login-modal-title">
-            Edit Factory
+            Add new column
         </div>
         
         <div class="group">      
@@ -33,30 +33,27 @@
 </template>
 
 <script>
-import { useAuthStore } from '../stores/auth'
-import { useFactoryStore } from '../stores/factory'
-import { usePageStore } from '../stores/pageState'
-
+import { useFactoryStore } from '../../stores/factory'
+import { usePageStore } from '../../stores/pageState'
 export default {
-    beforeRouteEnter(to, from){
-        const authStore = useAuthStore()
-        if(!authStore.getUserId){
-            return '/login'
-        }
+  beforeRouteEnter(to, from){
+      const authStore = useAuthStore()
+      if(!authStore.getUserId){
+          return '/login'
+      }
 
-        const factoryStore = useFactoryStore()
-        factoryStore.getFactoryList.filter((val)=> (val.id===this.factory_id))[0]
-
-        const pageStore = usePageStore()
-        pageStore.setShowError(false)
-    },
-    data(){
-        return {
-            factoryId: this.$route.params.factory_id,
-            values: { }
-        }
-    },
-    methods: {
+      const pageStore = usePageStore()
+      pageStore.setShowError(false)
+  },
+  data(){
+    return {
+      values: {
+        column_name: "",
+        column_type: "text"
+      }
+    }
+  },
+  methods: {
     handleCancel(){
       this.$router.push({name: 'factorylisttableview'})
     },
@@ -64,21 +61,20 @@ export default {
       const factoryStore = useFactoryStore()
       const pageStore = usePageStore()
       pageStore.setLoading(true)
-      factoryStore.changeFactoryInformation(factoryId, values)
-    //   factoryStore.addColumnFactoryTable(this.values.column_name, this.values.column_type)
-    //   .then((val)=> {
-    //     pageStore.setLoading(false)
-    //     this.$router.push({name: "factorylisttableview"})
-    //   }).catch((err)=>{
-    //     console.log(err);
-    //     pageStore.setLoading(false)
-    //   })
+      factoryStore.addColumnFactoryTable(this.values.column_name, this.values.column_type)
+      .then((val)=> {
+        pageStore.setLoading(false)
+        this.$router.push({name: "factorylisttableview"})
+      }).catch((err)=>{
+        console.log(err);
+        pageStore.setLoading(false)
+      })
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .button-group {
   bottom: 10px;
   display: flex;
