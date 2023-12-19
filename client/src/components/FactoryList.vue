@@ -18,6 +18,8 @@
         {{factoryStore.getFactoryTableColumnTypes}}
 
     </div> -->
+    <h1 class="page-title">Factory List</h1>
+    <button class="remove_button" @click="handleRemoveButton">{{setRemoveButtonText}}</button>
     <div class="table-wrapper">
         <table class="fl-table">
             <thead>
@@ -25,7 +27,12 @@
                     <th v-for="(column, index) in factoryStore.getFactoryTableColumnTypes" :key="index"><div>{{column.column_name}}</div></th> 
                 </tr> -->
                 <tr class="header">
-                    <th v-for="keyVal in getPropsForColumns()" :key="keyVal"><div>{{keyVal}}</div></th> 
+                    <th v-for="(keyVal, index) in getPropsForColumns()" :key="keyVal">
+                        <div>
+                            {{keyVal}}
+                            <button class="remove_button_table" v-if="index >= 4 && removingColumn" @click="handleRemoveAction(keyVal)">Delete</button>
+                        </div>
+                    </th> 
                 </tr>
             </thead>
             <tbody>
@@ -54,6 +61,11 @@ import { useFactoryStore } from '../stores/factory'
 import { usePageStore } from '../stores/pageState'
 
 export default {
+    data(){
+        return {
+            removingColumn: false
+        }
+    },
     created(){
         console.log(this.factoryStore.getFactoryTableColumnTypes);
     },
@@ -66,7 +78,23 @@ export default {
         const pageStore= usePageStore()
         pageStore.setShowError(false)
     },
+    computed:{
+        setRemoveButtonText(){
+            return this.removingColumn ? 'Cancel' : 'Remove column'
+        }
+    },
     methods: {
+        handleRemoveAction(columnName){
+            const factoryStore = useFactoryStore()
+            const pageStore = usePageStore()
+            pageStore.setLoading(true)
+            factoryStore.deleteColumnFactoryTable(columnName)
+            factoryStore.loadFactoryList(1)
+            this.$router.push('factorylist')
+        },
+        handleRemoveButton(){
+            this.removingColumn = ! this.removingColumn;
+        },
         getPropsForColumns(){
             console.log(Object.keys(this.factoryStore.getFactoryList[0]).filter((val)=> val !== 'id'));
             return Object.keys(this.factoryStore.getFactoryList[0]).filter((val)=> val !== 'id')
@@ -119,6 +147,124 @@ export default {
 </script>
 
 <style scoped>
+.remove_button_table {
+    margin-bottom: 10px;
+    margin-left: 10px
+}
+
+.remove_button_table{
+  appearance: none;
+  background-color: #fe5339;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 2px 6px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 60px;
+}
+
+.remove_button_table:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.remove_button_table:hover {
+  background-color: #fa7c68;
+}
+
+.remove_button_table:focus {
+  box-shadow: rgba(160, 42, 21, 0.4) 0 0 0 3px;
+  outline: none;
+}
+
+.remove_button_table:disabled {
+  background-color: #ed5454;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.remove_button_table:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+xxxxx
+.remove_button {
+    margin-bottom: 10px;
+    margin-left: 10px
+}
+
+.remove_button{
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 150px;
+}
+
+.remove_button:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.remove_button:hover {
+  background-color: #2c974b;
+}
+
+.remove_button:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.remove_button:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.remove_button:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+.page-title {
+    font-size: 40px;
+    text-align: center;
+}
+
 .link-container{
     text-align: right;
     display:flex;
