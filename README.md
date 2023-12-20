@@ -1,9 +1,16 @@
 # Timus-Bootcamp-Final-Project
+<h1>Table of Content</h1>h1>
+<ol>
+    <li>To run project (Project Configurations)</li>
+    <li>Introduction/li>
+    <li>Project Analysis (Functional, nonfunctional requirements, mockups, api design)</li>
+</ol>
 <h2>To run project</h2>
 <ol>
     <li>Download code</li>
     <li>Run npm install for the root, server, and client directories</li>
     <li>Create .env file with given variables below:</li>
+    <li>Run 'npm run start' command on the root file.</li>
 </ol>
 <br>
 
