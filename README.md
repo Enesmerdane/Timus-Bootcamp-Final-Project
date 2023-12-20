@@ -1,8 +1,11 @@
 # Timus-Bootcamp-Final-Project
 <h2>To run project</h2>
-1. Download code
-2. Run npm install for the root, server, and client directories
-3. Create .env file with given variables below:
+<ol>
+    <li>Download code</li>
+    <li>Run npm install for the root, server, and client directories</li>
+    <li>Create .env file with given variables below:</li>
+</ol>
+<br>
 ```
     {
     PORT
@@ -25,7 +28,7 @@
     DB_SECRET_REFRESH=db secret for creating access and refresh token
     }
 ```
-
+<br>
 <h1>Introduction</h1>
 
 This project is created as a final project of Patika&Timus Fullstack Bootcamp.
