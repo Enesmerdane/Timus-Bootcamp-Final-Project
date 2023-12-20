@@ -1,8 +1,8 @@
 # Timus-Bootcamp-Final-Project
-<h1>Table of Content</h1>
+<h1>Table of Contents</h1>
 <ol>
     <li>To run project (Project Configurations)</li>
-    <li>Introduction/li>
+    <li>Introduction</li>
     <li>Project Analysis (Functional, nonfunctional requirements, mockups, api design)</li>
 </ol>
 <h2>To run project</h2>
