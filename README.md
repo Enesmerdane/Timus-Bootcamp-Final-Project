@@ -6,7 +6,9 @@
     <li>Create .env file with given variables below:</li>
 </ol>
 <br>
+
 ```
+
 {
     PORT
 
@@ -27,7 +29,9 @@
     DB_SECRET=db secret for hashing passwords
     DB_SECRET_REFRESH=db secret for creating access and refresh token
     }
+
 ```
+
 <br>
 <h1>Introduction</h1>
 
