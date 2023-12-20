@@ -1,5 +1,5 @@
 # Timus-Bootcamp-Final-Project
-<h1>Table of Content</h1>h1>
+<h1>Table of Content</h1>
 <ol>
     <li>To run project (Project Configurations)</li>
     <li>Introduction/li>
