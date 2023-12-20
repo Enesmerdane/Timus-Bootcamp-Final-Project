@@ -96,12 +96,16 @@ export default {
         },
         handleSave(){
             const factoryStore = useFactoryStore()
-            Object.keys(columnTypes)
 
-            factoryStore.changeFactoryInformation(this.factoryId, this.values)
             const pageStore = usePageStore()
             pageStore.setLoading(true)
-            factoryStore.changeFactoryInformation(factoryId, values)
+
+            factoryStore.changeFactoryInformation(this.factoryId, {...this.values, subscription_begin_date: '01/01/1980', subscription_end_date: '01/01/1980'})
+            .then(()=>{
+                pageStore.setLoading(false)
+                this.$router.push({name:'factorylisttableview'})
+            })
+            // factoryStore.changeFactoryInformation(factoryId, values)
             //   factoryStore.addColumnFactoryTable(this.values.column_name, this.values.column_type)
             //   .then((val)=> {
             //     pageStore.setLoading(false)

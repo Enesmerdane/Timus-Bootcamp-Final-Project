@@ -33,8 +33,10 @@
 </template>
 
 <script>
+import { useAuthStore } from '../../stores/auth'
 import { useFactoryStore } from '../../stores/factory'
 import { usePageStore } from '../../stores/pageState'
+
 export default {
   beforeRouteEnter(to, from){
       const authStore = useAuthStore()

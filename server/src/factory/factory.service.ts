@@ -160,8 +160,11 @@ export class FactoryService {
         queryText += `WHERE id='${factoryInformation.id}'`;
 
         //console.log(queryText);
-
-        await this.pgConn.query(queryText);
+        try {
+            await this.pgConn.query(queryText);
+        } catch (err) {
+            console.log();
+        }
     }
 
     async addColumnFactoryTable(columnOptions: any) {
