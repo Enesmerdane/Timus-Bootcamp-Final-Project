@@ -10,7 +10,7 @@
 ```
 
 {
-    PORT
+    PORT=port to run backend
 
     ELASTIC_SEARCH_NODE=elastic cloud url
     ELASTIC_SEARCH_USERNAME=elastic cloud username
