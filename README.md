@@ -7,7 +7,7 @@
 </ol>
 <br>
 ```
-    {
+{
     PORT
 
     ELASTIC_SEARCH_NODE=elastic cloud url
