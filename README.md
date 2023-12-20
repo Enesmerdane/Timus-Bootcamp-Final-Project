@@ -4,6 +4,7 @@
 2. Run npm install for the root, server, and client directories
 3. Create .env file with given variables below:
 ```
+    {
     PORT
 
     ELASTIC_SEARCH_NODE=elastic cloud url
@@ -22,6 +23,7 @@
     
     DB_SECRET=db secret for hashing passwords
     DB_SECRET_REFRESH=db secret for creating access and refresh token
+    }
 ```
 
 <h1>Introduction</h1>
