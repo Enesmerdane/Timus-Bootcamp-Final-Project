@@ -1,4 +1,28 @@
 # Timus-Bootcamp-Final-Project
+<h2>To run project</h2>
+1. Download code
+2. Run npm install for the root, server, and client directories
+3. Create .env file with given variables below:
+```
+    PORT
+
+    ELASTIC_SEARCH_NODE=elastic cloud url
+    ELASTIC_SEARCH_USERNAME=elastic cloud username
+    ELASTIC_SEARCH_PASSWORD=elastic cloud password
+    
+    POSTGRE_DB_USER=elephantql postgre username
+    POSTGRE_DB_HOST=elephantql postgre host url
+    POSTGRE_DB_NAME=elephantql db name 
+    POSTGRE_DB_PASSWORD=elephantql db password
+    POSTGRE_DB_PORT=elephantql db port
+    
+    POSTGRE_DB_LINK=elephantql complete link
+    POSTGRE_API_KEY
+    
+    
+    DB_SECRET=db secret for hashing passwords
+    DB_SECRET_REFRESH=db secret for creating access and refresh token
+```
 
 <h1>Introduction</h1>
 
