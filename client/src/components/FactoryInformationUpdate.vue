@@ -3,18 +3,34 @@
         <div class="login-modal-title">
             Edit Factory
         </div>
-        
-        <div class="group">      
+        <div class="group" v-for="(keyVal) in getKeys" :key="keyVal">
+            <input :v-if="['character varying','date'].includes(columnTypes.find((val)=>val.column_name===keyVal).data_type)" 
+                class="form-input"
+                :id="keyVal"
+                name="column_name"
+                type="text"
+                v-model="values[keyVal]"
+                :placeholder="keyVal">
+            {{keyVal}}
+        </div>
+        <div :v-if="()=>{isBoolValue(keyVal)}" class="box">
+            {{keyVal}}
+            <select :v-model="values[keyVal]">
+                <option :value="true">True</option>
+                <option :value="false">False</option>
+            </select>
+        </div>
+        <!-- <div class="group">      
             <input id="column_name"
                 name="column_name"
                 type="text"
-                v-model="values.column_name"
+                v-model="values.factory_name"
                 class="form-input"
                 placeholder="Column name">
             <span class="highlight"></span>
-            <span class="bar"></span>
+            <span class="bar"></span> -->
             <!-- <label>Email</label> -->
-        </div>
+        <!-- </div>
         <div class="box">
           <select v-model="values.column_type">
             <option value="text">Text</option>
@@ -23,7 +39,7 @@
             <option value="boolean">Boolean</option>
             <option value="date">Date</option>
           </select>
-        </div>
+        </div> -->
         
         <div class="button-group">
           <button class="login_button" @click="handleSave">Save</button>
@@ -38,42 +54,63 @@ import { useFactoryStore } from '../stores/factory'
 import { usePageStore } from '../stores/pageState'
 
 export default {
+    computed: {
+        isBoolValue(keyVal){
+            console.log(keyVal);
+            return ['boolean'].includes(columnTypes.find((val)=>val.column_name===keyVal).data_type)
+        },
+        getKeys(){
+            return Object.keys(this.values)
+        }
+    },
+    setup(){
+        const factoryStore = useFactoryStore()
+        return {factoryStore}
+    },
     beforeRouteEnter(to, from){
         const authStore = useAuthStore()
         if(!authStore.getUserId){
             return '/login'
         }
-
+    },
+    beforeCreate(){
         const factoryStore = useFactoryStore()
-        factoryStore.getFactoryList.filter((val)=> (val.id===this.factory_id))[0]
+        console.log(factoryStore.getFactoryList.filter((val)=> (val.id===this.$route.params.factory_id))[0]);
+        this.values = factoryStore.getFactoryList.filter((val)=> (val.id===this.factory_id))[0]
 
         const pageStore = usePageStore()
         pageStore.setShowError(false)
+
+        factoryStore.loadFactoryColumnTypes()
     },
     data(){
         return {
             factoryId: this.$route.params.factory_id,
-            values: { }
+            values: this.factoryStore.getFactoryList.filter((val)=> (val.id===this.$route.params.factory_id))[0],
+            columnTypes: this.factoryStore.getFactoryTableColumnTypes
         }
     },
     methods: {
-    handleCancel(){
-      this.$router.push({name: 'factorylisttableview'})
-    },
-    handleSave(){
-      const factoryStore = useFactoryStore()
-      const pageStore = usePageStore()
-      pageStore.setLoading(true)
-      factoryStore.changeFactoryInformation(factoryId, values)
-    //   factoryStore.addColumnFactoryTable(this.values.column_name, this.values.column_type)
-    //   .then((val)=> {
-    //     pageStore.setLoading(false)
-    //     this.$router.push({name: "factorylisttableview"})
-    //   }).catch((err)=>{
-    //     console.log(err);
-    //     pageStore.setLoading(false)
-    //   })
-    }
+        handleCancel(){
+            this.$router.push({name: 'factorylisttableview'})
+        },
+        handleSave(){
+            const factoryStore = useFactoryStore()
+            Object.keys(columnTypes)
+
+            factoryStore.changeFactoryInformation(this.factoryId, this.values)
+            const pageStore = usePageStore()
+            pageStore.setLoading(true)
+            factoryStore.changeFactoryInformation(factoryId, values)
+            //   factoryStore.addColumnFactoryTable(this.values.column_name, this.values.column_type)
+            //   .then((val)=> {
+            //     pageStore.setLoading(false)
+            //     this.$router.push({name: "factorylisttableview"})
+            //   }).catch((err)=>{
+            //     console.log(err);
+            //     pageStore.setLoading(false)
+            //   })
+        }
   }
 }
 </script>
@@ -88,7 +125,9 @@ export default {
 .login-modal-view {
     background-color: aliceblue;
     width: 700px;
-    height: 450px;
+    max-height: 450px;
+    /* height: 100%; */
+    overflow-y: scroll;
     border-radius: 15px;
     display: flex;
     flex-direction: column;

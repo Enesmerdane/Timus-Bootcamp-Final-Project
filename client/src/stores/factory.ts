@@ -18,6 +18,16 @@ export const useFactoryStore = defineStore('factory', {
         getFactoryDetailsTableColumnTypes: (state) => state.factoryDetailsColumnTypes
     },
     actions: {
+        async loadFactoryColumnTypes() {
+            const result = await axios({
+                method: 'get',
+                url: '/api/factorytablecolumns'
+            })
+
+            //console.log(result)
+
+            this.factoryColumnTypes = result.data.payload.rows
+        },
         async loadFactoryList(page: number) {
             try {
                 const pageState = usePageStore()

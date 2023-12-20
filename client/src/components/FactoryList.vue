@@ -87,10 +87,11 @@ export default {
         }
     },
     methods: {
-        handleEdit(id){
+        handleEdit(factory_id){
+            console.log(factory_id);
             this.$router.push({
                 name: 'factorylistedit',
-                params: { factory_id: id}
+                params: { factory_id }
             })
         },
         handleAddColumnAction(){
